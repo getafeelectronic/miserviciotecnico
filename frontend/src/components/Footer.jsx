@@ -55,7 +55,6 @@ function Footer() {
           <ul className="footer-links">
             <li><Link to="/servicios">Reparación TV LCD/LED</Link></li>
             <li><Link to="/servicios">Reparación TV Plasma</Link></li>
-            <li><Link to="/servicios">Servicio a Domicilio</Link></li>
             <li><Link to="/servicios">Presupuesto Gratuito</Link></li>
           </ul>
         </div>

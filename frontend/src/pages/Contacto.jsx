@@ -187,7 +187,6 @@ function Contacto() {
                     <option value="">Selecciona un asunto</option>
                     <option value="presupuesto">Solicitar presupuesto</option>
                     <option value="reparacion">Reparación de TV</option>
-                    <option value="domicilio">Servicio a domicilio</option>
                     <option value="garantia">Consulta sobre garantía</option>
                     <option value="otro">Otro</option>
                   </select>
