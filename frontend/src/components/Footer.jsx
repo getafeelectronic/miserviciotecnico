@@ -90,19 +90,23 @@ function Footer() {
           <ul className="contact-info">
             <li>
               <MapPin size={18} />
-              <span>Getafe, Madrid, España</span>
+              <span>{import.meta.env.VITE_BUSINESS_ADDRESS || 'Getafe, Madrid, España'}</span>
             </li>
             <li>
               <Phone size={18} />
-              <a href="tel:+34123456789">+34 123 456 789</a>
+              <a href={`tel:${import.meta.env.VITE_BUSINESS_PHONE || '+34123456789'}`}>
+                {import.meta.env.VITE_BUSINESS_PHONE || '+34 123 456 789'}
+              </a>
             </li>
             <li>
               <Mail size={18} />
-              <a href="mailto:info@miserviciotecnico.com">info@miserviciotecnico.com</a>
+              <a href={`mailto:${import.meta.env.VITE_BUSINESS_EMAIL || 'info@miserviciotecnico.com'}`}>
+                {import.meta.env.VITE_BUSINESS_EMAIL || 'info@miserviciotecnico.com'}
+              </a>
             </li>
             <li>
               <Clock size={18} />
-              <span>Lun-Vie: 9:00 - 19:00</span>
+              <span>{import.meta.env.VITE_BUSINESS_HOURS || 'Lun-Vie: 9:00 - 19:00'}</span>
             </li>
           </ul>
         </div>
