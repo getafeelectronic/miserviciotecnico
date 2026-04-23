@@ -4,72 +4,73 @@
 
 ![Estado del Proyecto](https://img.shields.io/badge/estado-en%20desarrollo-yellow)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-blue)
-![Versión](https://img.shields.io/badge/versión-1.0.0-green)
+![Versión](https://img.shields.io/badge/versión-0.1.0-green)
 
-**Servicio técnico especializado en la reparación de televisores en Getafe**
+**Sitio web corporativo para servicio técnico especializado en reparación de televisores**
 
-[🌐 Sitio Web](#) · [📞 Contacto](#contacto) · [📋 Servicios](#servicios)
+[🌐 Demo](#) · [📞 Contacto](#contacto) · [📋 Características](#características)
 
 </div>
 
 ---
 
-## 📖 Sobre Nosotros
+## 📖 Sobre el Proyecto
 
-**Mi Servicio Técnico** es un servicio técnico especializado en la reparación de televisores en Getafe, con amplia experiencia en todo tipo de marcas y modelos. Ofrecemos soluciones rápidas, económicas y de confianza para devolver la vida a tus dispositivos electrónicos.
+Este es el **sitio web corporativo** para un servicio técnico especializado en la reparación de televisores en Getafe, Madrid. La web proporciona información sobre servicios, ubicación, reseñas de clientes y contacto directo.
 
-### 🎯 Nuestra Misión
+### 🎯 Objetivo
 
-Proporcionar un servicio técnico de calidad, accesible y confiable para los habitantes de Getafe y alrededores, garantizando la satisfacción del cliente en cada reparación.
-
----
-
-## 🛠️ Servicios
-
-- ✅ **Reparación de televisores** - Todo tipo de marcas y modelos
-- ✅ **Diagnóstico gratuito** - Evaluación sin compromiso
-- ✅ **Servicio a domicilio** - Comodidad para el cliente
-- ✅ **Reparaciones express** - Soluciones rápidas
-- ✅ **Garantía** - Todas nuestras reparaciones incluyen garantía
-- ✅ **Presupuesto transparente** - Sin sorpresas en el precio
-
-### 📱 Marcas que Reparamos
-
-- Samsung
-- LG
-- Sony
-- Philips
-- Panasonic
-- Hisense
-- TCL
-- Y muchas más...
+Crear una presencia web moderna y profesional que permita a los clientes:
+- Conocer los servicios ofrecidos
+- Leer artículos técnicos y consejos (asistidos por IA)
+- Contactar fácilmente con el servicio
+- Ver la ubicación en el mapa
+- Consultar reseñas reales de Google My Business
 
 ---
 
-## 💻 Sobre este Proyecto
+## ✨ Características
 
-Este repositorio contiene el sistema de gestión para **Mi Servicio Técnico**, desarrollado para optimizar la gestión de clientes, reparaciones, presupuestos e inventario.
+### 🏠 Landing Page Moderna
+- Diseño responsive y atractivo
+- Hero section con llamada a la acción
+- Presentación de servicios destacados
 
-### ✨ Características Principales
+### 📝 Blog Técnico con IA
+- Artículos sobre reparación y mantenimiento
+- Contenido generado/asistido con Machine Learning
+- Tips y consejos para usuarios
 
-- 📋 **Gestión de clientes** - Base de datos de clientes y historial
-- 🔧 **Control de reparaciones** - Seguimiento de trabajos en curso
-- 💰 **Presupuestos** - Generación automática de presupuestos
-- 📦 **Inventario** - Control de piezas y repuestos
-- 📊 **Reportes** - Estadísticas y análisis de negocio
-- 📅 **Agenda** - Programación de citas y visitas
+### 📧 Formulario de Contacto
+- Formulario inteligente con validación
+- Envío directo por email
+- Respuesta automática al cliente
+
+### 📍 Ubicación y Mapa
+- Integración con Google Maps
+- Dirección y horarios de atención
+- Cómo llegar desde diferentes puntos
+
+### ⭐ Reseñas de Clientes
+- Integración con Google My Business API
+- Mostrar reseñas reales de clientes
+- Actualización automática de valoraciones
+
+### 🛠️ Servicios Ofrecidos
+- Catálogo completo de servicios
+- Marcas que se reparan
+- Galería de trabajos realizados
 
 ---
 
-## 🚀 Instalación
+## 🚀 Instalación y Desarrollo
 
 ### Prerrequisitos
 
 ```bash
 # Asegúrate de tener instalado:
-# - Node.js (v18 o superior)
-# - npm o yarn
-# - Base de datos (MySQL/PostgreSQL/SQLite)
+# - Node.js (v20 o superior)
+# - npm (incluido con Node.js)
 ```
 
 ### Pasos de Instalación
@@ -80,30 +81,26 @@ git clone https://github.com/getafeelectronic/miserviciotecnico.git
 cd miserviciotecnico
 ```
 
-2. **Instalar dependencias**
+2. **Instalar dependencias del frontend**
 ```bash
+cd frontend
 npm install
-# o
-yarn install
 ```
 
 3. **Configurar variables de entorno**
 ```bash
 cp .env.example .env
-# Edita el archivo .env con tus credenciales
+# Edita el archivo .env con tus credenciales:
+# - VITE_SUPABASE_URL (si usas Supabase)
+# - VITE_SUPABASE_ANON_KEY
+# - VITE_GOOGLE_MAPS_API_KEY
+# - VITE_GOOGLE_MY_BUSINESS_API_KEY
 ```
 
-4. **Configurar la base de datos**
-```bash
-npm run migrate
-npm run seed
-```
-
-5. **Iniciar el servidor**
+4. **Iniciar el servidor de desarrollo**
 ```bash
 npm run dev
-# o
-npm start
+# La web estará disponible en http://localhost:5173
 ```
 
 ---
@@ -112,23 +109,41 @@ npm start
 
 ```
 miserviciotecnico/
-├── src/
-│   ├── components/     # Componentes reutilizables
-│   ├── pages/          # Páginas de la aplicación
-│   ├── services/       # Lógica de negocio
-│   ├── models/         # Modelos de datos
-│   ├── utils/          # Utilidades y helpers
-│   └── config/         # Configuración
-├── public/             # Archivos estáticos
-├── tests/              # Pruebas
-├── docs/               # Documentación
-├── .gitignore
-├── package.json
-└── README.md
-```
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # Componentes UI reutilizables
+│   │   │   ├── Header.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── ContactForm.jsx
+│   │   │   ├── ServiceCard.jsx
+│   │   │   └── ReviewCard.jsx
+│   │   ├── pages/          # Páginas principales
+│   │   │   ├── Home.jsx
+│   │   │   ├── Services.jsx
+│   │   │   ├── Blog.jsx
+│   │   │   └── Contact.jsx
+│   │   ├── lib/            # Configuración de APIs
+│   │   │   ├── supabase.js
+│   │   │   └── gmaps.js
+│   │   └── utils/          # Utilidades
+│   ├──Stack Tecnológico
 
----
+### Frontend
+- **React 18** - Biblioteca UI moderna
+- **Vite** - Build tool ultra-rápido
+- **React Router** - Navegación SPA
+- **Zustand** - State management ligero
+- **React Hook Form** - Manejo de formularios
 
+### APIs y Servicios
+- **Supabase** - Backend as a Service (opcional para blog)
+- **Google Maps API** - Integración de mapas
+- **Google My Business API** - Reseñas de clientes
+- **OpenAI/Anthropic** - Asistencia IA para contenido
+
+### Hosting y Deploy
+- **Vercel/Netlify** - Hosting del frontend (gratuito)
+- **GitHub Actions** - CI/CD automático
 ## 🛡️ Tecnologías Utilizadas
 
 <!-- Actualiza esta sección según tu stack tecnológico -->
@@ -145,13 +160,25 @@ miserviciotecnico/
 
 Las contribuciones son bienvenidas. Para cambios importantes:
 
-1. Fork el proyecto
-2. Crea una rama para tu característica (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add: nueva característica'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+### Fase 1 - MVP ✅ (En progreso)
+- [x] Estructura base del proyecto
+- [x] Componentes de autenticación
+- [ ] Landing page con hero section
+- [ ] Sección de servicios
+- [ ] Formulario de contacto funcional
 
----
+### Fase 2 - Contenido Dinámico
+- [ ] Integración Google Maps
+- [ ] Integración Google My Business (reseñas)
+- [ ] Blog con artículos básicos
+- [ ] Galería de trabajos realizados
+
+### Fase 3 - IA y Avanzado
+- [ ] Generación de contenido con IA
+- [ ] Chatbot de asistencia
+- [ ] SEO optimizado
+- [ ] Progressive Web App (PWA)
+- [ ] Analytics y métrica
 
 
 

@@ -1,4 +1,4 @@
-import { Tv, Wrench, Home as HomeIcon, BadgeCheck, ArrowRight, Star } from 'lucide-react';
+import { Tv, Wrench, BadgeCheck, ArrowRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
@@ -15,11 +15,6 @@ function Home() {
       icon: <Wrench size={40} />,
       title: 'Reparación TV Plasma',
       description: 'Especialistas en solucionar problemas de televisores plasma.'
-    },
-    {
-      icon: <HomeIcon size={40} />,
-      title: 'Servicio a Domicilio',
-      description: 'Vamos a tu casa para diagnóstico y reparación sin coste adicional.'
     },
     {
       icon: <BadgeCheck size={40} />,
@@ -128,10 +123,6 @@ function Home() {
                 <li className="feature-item">
                   <span className="feature-icon">✓</span>
                   <span>Presupuesto sin sorpresas</span>
-                </li>
-                <li className="feature-item">
-                  <span className="feature-icon">✓</span>
-                  <span>Servicio a domicilio en Getafe</span>
                 </li>
               </ul>
             </motion.div>

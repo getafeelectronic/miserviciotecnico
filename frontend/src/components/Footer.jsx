@@ -1,10 +1,35 @@
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import logo from '../assets/logo.png';
+import packageJson from '../../package.json';
 import './Footer.css';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const [version, setVersion] = useState(packageJson.version);
+
+  useEffect(() => {
+    // Intentar obtener la última versión desde GitHub Releases
+    const fetchGitHubVersion = async () => {
+      try {
+        const response = await fetch(
+          'https://api.github.com/repos/getafeelectronic/miserviciotecnico/releases/latest'
+        );
+        if (response.ok) {
+          const data = await response.json();
+          if (data.tag_name) {
+            setVersion(data.tag_name.replace('v', '')); // Quitar la 'v' si existe
+          }
+        }
+      } catch (error) {
+        // Si falla, mantener la versión del package.json
+        console.log('Usando versión local:', packageJson.version);
+      }
+    };
+
+    fetchGitHubVersion();
+  }, []);
 
   return (
     <footer className="footer">
@@ -55,7 +80,6 @@ function Footer() {
           <ul className="footer-links">
             <li><Link to="/servicios">Reparación TV LCD/LED</Link></li>
             <li><Link to="/servicios">Reparación TV Plasma</Link></li>
-            <li><Link to="/servicios">Servicio a Domicilio</Link></li>
             <li><Link to="/servicios">Presupuesto Gratuito</Link></li>
           </ul>
         </div>
@@ -66,19 +90,23 @@ function Footer() {
           <ul className="contact-info">
             <li>
               <MapPin size={18} />
-              <span>Getafe, Madrid, España</span>
+              <span>{import.meta.env.VITE_BUSINESS_ADDRESS || 'Getafe, Madrid, España'}</span>
             </li>
             <li>
               <Phone size={18} />
-              <a href="tel:+34123456789">+34 123 456 789</a>
+              <a href={`tel:${import.meta.env.VITE_BUSINESS_PHONE || '+34123456789'}`}>
+                {import.meta.env.VITE_BUSINESS_PHONE || '+34 123 456 789'}
+              </a>
             </li>
             <li>
               <Mail size={18} />
-              <a href="mailto:info@miserviciotecnico.com">info@miserviciotecnico.com</a>
+              <a href={`mailto:${import.meta.env.VITE_BUSINESS_EMAIL || 'info@miserviciotecnico.com'}`}>
+                {import.meta.env.VITE_BUSINESS_EMAIL || 'info@miserviciotecnico.com'}
+              </a>
             </li>
             <li>
               <Clock size={18} />
-              <span>Lun-Vie: 9:00 - 19:00</span>
+              <span>{import.meta.env.VITE_BUSINESS_HOURS || 'Lun-Vie: 9:00 - 19:00'}</span>
             </li>
           </ul>
         </div>
@@ -88,7 +116,7 @@ function Footer() {
       <div className="footer-bottom">
         <div className="footer-bottom-container">
           <p className="copyright">
-            © {currentYear} Mi Servicio Técnico. Todos los derechos reservados.
+            © {currentYear} Mi Servicio Técnico. Todos los derechos reservados. <span className="version">v{version}</span>
           </p>
           <div className="legal-links">
             <Link to="/privacidad">Política de Privacidad</Link>
