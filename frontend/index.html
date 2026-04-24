@@ -5,6 +5,18 @@
     <link rel="icon" type="image/x-icon" href="/icon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mi Servicio Técnico de Televisores en Getafe | Reparación Profesional Multimarca</title>
+    
+    <!-- Script para restaurar ruta después de redirect desde 404.html -->
+    <script>
+      // Restaurar la ruta guardada por 404.html
+      (function() {
+        var redirectPath = sessionStorage.getItem('redirect_path');
+        if (redirectPath) {
+          sessionStorage.removeItem('redirect_path');
+          history.replaceState(null, '', '/miserviciotecnico' + redirectPath);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
