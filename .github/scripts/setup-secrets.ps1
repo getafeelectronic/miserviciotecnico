@@ -94,6 +94,43 @@ foreach ($key in $apiSecrets.Keys) {
 }
 
 Write-Host ""
+Write-Host "[DB] Configurando Supabase Database..." -ForegroundColor Yellow
+Write-Host ""
+Write-Host "[INFO] Para reviews dinamicas desde base de datos" -ForegroundColor Gray
+Write-Host "        Si no configuras, se usaran reviews de fallback" -ForegroundColor Gray
+Write-Host ""
+
+$supabaseSecrets = @{
+    "VITE_SUPABASE_URL" = ""
+    "VITE_SUPABASE_ANON_KEY" = ""
+}
+
+foreach ($key in $supabaseSecrets.Keys) {
+    Write-Host "  Supabase - $key" -ForegroundColor Cyan
+    
+    if ($key -eq "VITE_SUPABASE_URL") {
+        Write-Host "    (Ejemplo: https://tuproyecto.supabase.co)" -ForegroundColor Gray
+    } else {
+        Write-Host "    (Clave publica 'anon' de Supabase Dashboard > Settings > API)" -ForegroundColor Gray
+    }
+    
+    $value = Read-Host "  Valor (Enter para omitir)"
+    
+    if ($value) {
+        $value | gh secret set $key
+        
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "  [OK] Configurado" -ForegroundColor Green
+        } else {
+            Write-Host "  [ERROR] Error al configurar" -ForegroundColor Red
+        }
+    } else {
+        Write-Host "  [SKIP] Omitido (se usaran datos de fallback)" -ForegroundColor Gray
+    }
+    Write-Host ""
+}
+
+Write-Host ""
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host "[OK] Configuracion de secrets completada" -ForegroundColor Green
 Write-Host ""
