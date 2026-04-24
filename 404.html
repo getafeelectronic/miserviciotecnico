@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Redirigiendo...</title>
+  <script>
+    // Solución para SPAs en GitHub Pages
+    // Cuando GitHub Pages encuentra un 404, este script guarda la ruta
+    // y redirige al index.html, donde la app React manejará la ruta
+    
+    // Obtener la ruta completa incluyendo el subdirectorio
+    var pathSegments = location.pathname.split('/').slice(1);
+    
+    // Construir la URL con el query string especial
+    // GitHub Pages ignora todo después de ? en la URL
+    var redirect = location.protocol + '//' + location.host + '/miserviciotecnico/';
+    
+    // Si hay path después de /miserviciotecnico/, guardarlo en sessionStorage
+    if (pathSegments.length > 1 && pathSegments[0] === 'miserviciotecnico') {
+      // Guardar la ruta para que la app la restaure
+      sessionStorage.setItem('redirect_path', '/' + pathSegments.slice(1).join('/'));
+    }
+    
+    // Redirigir al index.html
+    location.replace(redirect);
+  </script>
+</head>
+<body>
+  <p>Redirigiendo...</p>
+</body>
+</html>
