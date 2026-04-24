@@ -36,7 +36,90 @@ jobs:
         working-directory: ./frontend
         run: npm ci
       
-      # 4. Build del proyecto
+      # 4. Validar configuración de secrets
+      - name: Validar secrets configurados
+        run: |
+          echo "🔐 Validando configuración de GitHub Secrets..."
+          echo ""
+          
+          MISSING_SECRETS=()
+          OPTIONAL_SECRETS=()
+          
+          # Secrets obligatorios (información del negocio)
+          REQUIRED=(
+            "VITE_BUSINESS_EMAIL:${{ secrets.VITE_BUSINESS_EMAIL }}"
+            "VITE_BUSINESS_PHONE:${{ secrets.VITE_BUSINESS_PHONE }}"
+            "VITE_BUSINESS_ADDRESS:${{ secrets.VITE_BUSINESS_ADDRESS }}"
+            "VITE_BUSINESS_HOURS:${{ secrets.VITE_BUSINESS_HOURS }}"
+            "VITE_BUSINESS_COORDINATES_LAT:${{ secrets.VITE_BUSINESS_COORDINATES_LAT }}"
+            "VITE_BUSINESS_COORDINATES_LNG:${{ secrets.VITE_BUSINESS_COORDINATES_LNG }}"
+          )
+          
+          # Secrets opcionales (APIs externas)
+          OPTIONAL=(
+            "VITE_EMAILJS_SERVICE_ID:${{ secrets.VITE_EMAILJS_SERVICE_ID }}"
+            "VITE_EMAILJS_TEMPLATE_ID:${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}"
+            "VITE_EMAILJS_PUBLIC_KEY:${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}"
+            "VITE_GOOGLE_MAPS_API_KEY:${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}"
+          )
+          
+          echo "📋 Verificando secrets obligatorios:"
+          for item in "${REQUIRED[@]}"; do
+            key="${item%%:*}"
+            value="${item#*:}"
+            if [ -z "$value" ]; then
+              echo "  ❌ $key - NO CONFIGURADO"
+              MISSING_SECRETS+=("$key")
+            else
+              echo "  ✅ $key - Configurado"
+            fi
+          done
+          
+          echo ""
+          echo "🔑 Verificando secrets opcionales:"
+          for item in "${OPTIONAL[@]}"; do
+            key="${item%%:*}"
+            value="${item#*:}"
+            if [ -z "$value" ]; then
+              echo "  ⚠️  $key - No configurado (modo demo)"
+              OPTIONAL_SECRETS+=("$key")
+            else
+              echo "  ✅ $key - Configurado"
+            fi
+          done
+          
+          echo ""
+          
+          if [ ${#MISSING_SECRETS[@]} -gt 0 ]; then
+            echo "❌ ERROR: Faltan secrets obligatorios:"
+            for secret in "${MISSING_SECRETS[@]}"; do
+              echo "  - $secret"
+            done
+            echo ""
+            echo "📖 Para configurar los secrets:"
+            echo "  1. Ejecuta: .github/scripts/setup-secrets.sh (Linux/Mac)"
+            echo "     o: .github/scripts/setup-secrets.ps1 (Windows)"
+            echo ""
+            echo "  2. O configúralos manualmente en:"
+            echo "     https://github.com/${{ github.repository }}/settings/secrets/actions"
+            echo ""
+            exit 1
+          fi
+          
+          if [ ${#OPTIONAL_SECRETS[@]} -gt 0 ]; then
+            echo "⚠️  ADVERTENCIA: Algunos secrets opcionales no están configurados:"
+            for secret in "${OPTIONAL_SECRETS[@]}"; do
+              echo "  - $secret"
+            done
+            echo ""
+            echo "El sitio se desplegará en modo demo para estas funcionalidades."
+            echo "Para configurarlos, ejecuta: .github/scripts/setup-secrets.sh"
+            echo ""
+          fi
+          
+          echo "✅ Validación completada. Continuando con el build..."
+      
+      # 5. Build del proyecto
       - name: Build proyecto
         working-directory: ./frontend
         run: npm run build
@@ -54,7 +137,7 @@ jobs:
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
           VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
       
-      # 5. Deploy a GitHub Pages (rama gh-pages)
+      # 6. Deploy a GitHub Pages (rama gh-pages)
       - name: Deploy a gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
