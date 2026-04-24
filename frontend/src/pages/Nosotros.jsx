@@ -48,7 +48,6 @@ function Nosotros() {
     'Reparación de televisores LED, OLED, LCD y Plasma',
     'Servicio técnico especializado en Smart TV',
     'Reparación de averías de imagen, sonido y placa base',
-    'Sustitución de pantallas y retroiluminación',
     'Diagnóstico profesional con presupuesto sin compromiso',
     'Servicio urgente',
     'Reparación de televisores de todas las marcas'

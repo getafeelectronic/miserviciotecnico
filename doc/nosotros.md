@@ -11,7 +11,6 @@ Ofrecemos un servicio integral adaptado a las necesidades de cada cliente:
 - Reparación de televisores LED, OLED, LCD y Plasma  
 - Servicio técnico especializado en Smart TV  
 - Reparación de averías de imagen, sonido y placa base  
-- Sustitución de pantallas, retroiluminación y componentes electrónicos  
 - Diagnóstico profesional con presupuesto sin compromiso  
 - Servicio urgente   
 - Reparación de televisores de todas las marcas y modelos  
