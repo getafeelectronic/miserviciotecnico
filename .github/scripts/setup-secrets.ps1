@@ -2,26 +2,26 @@
 # Uso: .\setup-secrets.ps1
 # Requiere: GitHub CLI (gh) instalado y autenticado
 
-Write-Host "🔐 Configuración de GitHub Secrets para Deploy" -ForegroundColor Cyan
-Write-Host "=" * 60 -ForegroundColor Cyan
+Write-Host "[CONFIG] Configuracion de GitHub Secrets para Deploy" -ForegroundColor Cyan
+Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Verificar que gh está instalado
+# Verificar que gh esta instalado
 if (!(Get-Command gh -ErrorAction SilentlyContinue)) {
-    Write-Host "❌ Error: GitHub CLI (gh) no está instalado" -ForegroundColor Red
+    Write-Host "[ERROR] GitHub CLI (gh) no esta instalado" -ForegroundColor Red
     Write-Host "Instalar: https://cli.github.com/" -ForegroundColor Yellow
     exit 1
 }
 
-# Verificar autenticación
+# Verificar autenticacion
 $authStatus = gh auth status 2>&1
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Error: No estás autenticado en GitHub CLI" -ForegroundColor Red
+    Write-Host "[ERROR] No estas autenticado en GitHub CLI" -ForegroundColor Red
     Write-Host "Ejecuta: gh auth login" -ForegroundColor Yellow
     exit 1
 }
 
-Write-Host "✅ GitHub CLI configurado correctamente" -ForegroundColor Green
+Write-Host "[OK] GitHub CLI configurado correctamente" -ForegroundColor Green
 Write-Host ""
 
 # Información del negocio (valores por defecto)
@@ -42,14 +42,14 @@ $apiSecrets = @{
     "VITE_GOOGLE_MAPS_API_KEY" = ""
 }
 
-Write-Host "📋 Configurando información del negocio..." -ForegroundColor Yellow
+Write-Host "[INFO] Configurando informacion del negocio..." -ForegroundColor Yellow
 Write-Host ""
 
 foreach ($key in $secrets.Keys) {
     $value = $secrets[$key]
     Write-Host "  Configurando: $key" -ForegroundColor Cyan
     
-    # Pedir confirmación o cambio
+    # Pedir confirmacion o cambio
     $input = Read-Host "  Valor: $value (Enter para usar, o escribe nuevo valor)"
     if ($input) {
         $value = $input
@@ -59,18 +59,18 @@ foreach ($key in $secrets.Keys) {
     $value | gh secret set $key
     
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "  ✅ Configurado" -ForegroundColor Green
+        Write-Host "  [OK] Configurado" -ForegroundColor Green
     } else {
-        Write-Host "  ❌ Error al configurar" -ForegroundColor Red
+        Write-Host "  [ERROR] Error al configurar" -ForegroundColor Red
     }
     Write-Host ""
 }
 
 Write-Host ""
-Write-Host "🔑 Configurando APIs (EmailJS y Google Maps)..." -ForegroundColor Yellow
+Write-Host "[API] Configurando APIs (EmailJS y Google Maps)..." -ForegroundColor Yellow
 Write-Host ""
-Write-Host "⚠️  Deja vacío si no tienes las credenciales ahora" -ForegroundColor Yellow
-Write-Host "    El sitio funcionará en modo demo sin ellas" -ForegroundColor Gray
+Write-Host "[WARN] Deja vacio si no tienes las credenciales ahora" -ForegroundColor Yellow
+Write-Host "       El sitio funcionara en modo demo sin ellas" -ForegroundColor Gray
 Write-Host ""
 
 foreach ($key in $apiSecrets.Keys) {
@@ -83,21 +83,21 @@ foreach ($key in $apiSecrets.Keys) {
         $value | gh secret set $key
         
         if ($LASTEXITCODE -eq 0) {
-            Write-Host "  ✅ Configurado" -ForegroundColor Green
+            Write-Host "  [OK] Configurado" -ForegroundColor Green
         } else {
-            Write-Host "  ❌ Error al configurar" -ForegroundColor Red
+            Write-Host "  [ERROR] Error al configurar" -ForegroundColor Red
         }
     } else {
-        Write-Host "  ⏭️  Omitido (modo demo)" -ForegroundColor Gray
+        Write-Host "  [SKIP] Omitido (modo demo)" -ForegroundColor Gray
     }
     Write-Host ""
 }
 
 Write-Host ""
-Write-Host "=" * 60 -ForegroundColor Cyan
-Write-Host "✅ Configuración de secrets completada" -ForegroundColor Green
+Write-Host "============================================================" -ForegroundColor Cyan
+Write-Host "[OK] Configuracion de secrets completada" -ForegroundColor Green
 Write-Host ""
-Write-Host "📝 Próximos pasos:" -ForegroundColor Yellow
+Write-Host "[NEXT] Proximos pasos:" -ForegroundColor Yellow
 Write-Host "  1. Verifica los secrets configurados en:" -ForegroundColor White
 Write-Host "     https://github.com/getafeelectronic/miserviciotecnico/settings/secrets/actions" -ForegroundColor Gray
 Write-Host ""
