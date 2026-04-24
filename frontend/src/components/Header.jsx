@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Menu, X, Phone } from 'lucide-react';
 import { useState } from 'react';
-import logo from '../assets/logo.png';
 import './Header.css';
+
+// Logo desde Supabase Storage
+const logo = 'https://lysejfhxackcmoksclvm.supabase.co/storage/v1/object/sign/web/logo.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80YWMwNzIyNi04MjE4LTRmYjctODQ1Mi0xOTMwZTU2NjRhODkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ3ZWIvbG9nby5wbmciLCJpYXQiOjE3NzcwMjc1NDAsImV4cCI6MjA5MjM4NzU0MH0.YFd0pdxZDl2Iej_M1GwgLecd3NfhaG2oe40wgMk_cp0';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -1,9 +1,11 @@
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import logo from '../assets/logo.png';
 import packageJson from '../../package.json';
 import './Footer.css';
+
+// Logo desde Supabase Storage
+const logo = 'https://lysejfhxackcmoksclvm.supabase.co/storage/v1/object/sign/web/logo.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80YWMwNzIyNi04MjE4LTRmYjctODQ1Mi0xOTMwZTU2NjRhODkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ3ZWIvbG9nby5wbmciLCJpYXQiOjE3NzcwMjc1NDAsImV4cCI6MjA5MjM4NzU0MH0.YFd0pdxZDl2Iej_M1GwgLecd3NfhaG2oe40wgMk_cp0';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
