@@ -1,0 +1,24 @@
+/* EQUIPO */
+Nombre del sitio: Mi Servicio Técnico
+Empresa: Getafe Electronic
+Ubicación: Getafe, Madrid, España
+Contacto: ruizrjan@gmail.com
+
+/* SITIO */
+Última actualización: 2026/04/24
+Lenguaje: Español
+Doctype: HTML5
+IDE: Visual Studio Code
+
+/* TECNOLOGÍA */
+Frontend: React 18 + Vite
+Diseño: CSS3 + Responsive Design
+Animaciones: Framer Motion
+Iconos: Lucide React
+Hosting: GitHub Pages
+Despliegue: GitHub Actions CI/CD
+
+/* AGRADECIMIENTOS */
+Stack: Node.js, React, Vite
+Almacenamiento de imágenes: Supabase Storage
+Control de versiones: Git + GitHub
