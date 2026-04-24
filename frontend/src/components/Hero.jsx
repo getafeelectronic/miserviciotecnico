@@ -54,10 +54,11 @@ function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="image-placeholder">
-            <span className="placeholder-icon">📺</span>
-            <p className="placeholder-text">Reparamos todas las marcas</p>
-          </div>
+          <img 
+            src="https://lysejfhxackcmoksclvm.supabase.co/storage/v1/object/sign/web/1200_900.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80YWMwNzIyNi04MjE4LTRmYjctODQ1Mi0xOTMwZTU2NjRhODkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ3ZWIvMTIwMF85MDAuanBlZyIsImlhdCI6MTc3NzAyODQwOSwiZXhwIjoyMDkyMzg4NDA5fQ.c1Kdi_KY3gWqrINnravQeZ74CJMv8Va6MLdQnIWd-TQ"
+            alt="Reparación de televisores profesional"
+            className="hero-image-real"
+          />
         </motion.div>
       </div>
     </section>
