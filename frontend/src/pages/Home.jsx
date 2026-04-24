@@ -1,29 +1,19 @@
+import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Tv, Wrench, BadgeCheck, ArrowRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
+import { getReviews } from '../lib/supabase';
 import './Home.css';
 
 function Home() {
-  const services = [
-    {
-      icon: <Tv size={40} />,
-      title: 'Reparación TV LCD/LED',
-      description: 'Reparamos todo tipo de televisores LCD y LED de todas las marcas.'
-    },
-    {
-      icon: <Wrench size={40} />,
-      title: 'Reparación TV Plasma',
-      description: 'Especialistas en solucionar problemas de televisores plasma.'
-    },
-    {
-      icon: <BadgeCheck size={40} />,
-      title: 'Garantía Incluida',
-      description: 'Todas nuestras reparaciones incluyen garantía de 6 meses.'
-    }
-  ];
+  // Estado para reviews dinámicas
+  const [reviews, setReviews] = useState([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
 
-  const reviews = [
+  // Datos de fallback (se usan si Supabase no está configurado)
+  const fallbackReviews = [
     {
       name: 'María García',
       rating: 5,
@@ -44,8 +34,55 @@ function Home() {
     }
   ];
 
+  // Cargar reviews desde Supabase al montar el componente
+  useEffect(() => {
+    async function loadReviews() {
+      const data = await getReviews();
+      
+      // Si hay datos de Supabase, usarlos; si no, usar fallback
+      if (data && data.length > 0) {
+        setReviews(data);
+      } else {
+        console.info('📋 Usando reviews de fallback (Supabase no configurado o sin datos)');
+        setReviews(fallbackReviews);
+      }
+      
+      setLoadingReviews(false);
+    }
+
+    loadReviews();
+  }, []);
+
+  const services = [
+    {
+      icon: <Tv size={40} />,
+      title: 'Reparación TV LCD/LED',
+      description: 'Reparamos todo tipo de televisores LCD y LED de todas las marcas.'
+    },
+    {
+      icon: <Wrench size={40} />,
+      title: 'Reparación TV Plasma',
+      description: 'Especialistas en solucionar problemas de televisores plasma.'
+    },
+    {
+      icon: <BadgeCheck size={40} />,
+      title: 'Garantía Incluida',
+      description: 'Todas nuestras reparaciones incluyen garantía de 6 meses.'
+    }
+  ];
+
   return (
     <div className="home">
+      <Helmet>
+        <title>Mi Servicio Técnico de Televisores en Getafe | Reparación Profesional</title>
+        <meta name="description" content="Servicio técnico profesional de reparación de televisores en Getafe. Más de 10 años de experiencia. Diagnóstico gratuito, reparación rápida y garantía incluida." />
+        <meta property="og:title" content="Mi Servicio Técnico de Televisores en Getafe" />
+        <meta property="og:description" content="Servicio técnico profesional con más de 10 años de experiencia en reparación de televisores LCD, LED y Plasma." />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Mi Servicio Técnico de Televisores en Getafe" />
+        <meta name="twitter:description" content="Servicio técnico profesional con más de 10 años de experiencia." />
+      </Helmet>
       <Hero />
 
       {/* Services Section */}
@@ -169,19 +206,24 @@ function Home() {
             </p>
           </motion.div>
 
-          <div className="reviews-grid">
-            {reviews.map((review, index) => (
-              <motion.div
-                key={index}
-                className="review-card"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <div className="review-header">
-                  <div className="review-author">
-                    <div className="author-avatar">{review.name[0]}</div>
+          {loadingReviews ? (
+            <div className="reviews-loading">
+              <p>Cargando opiniones...</p>
+            </div>
+          ) : (
+            <div className="reviews-grid">
+              {reviews.map((review, index) => (
+                <motion.div
+                  key={review.id || index}
+                  className="review-card"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <div className="review-header">
+                    <div className="review-author">
+                      <div className="author-avatar">{review.name[0]}</div>
                     <div>
                       <div className="author-name">{review.name}</div>
                       <div className="review-date">{review.date}</div>
@@ -196,7 +238,8 @@ function Home() {
                 <p className="review-text">{review.text}</p>
               </motion.div>
             ))}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 

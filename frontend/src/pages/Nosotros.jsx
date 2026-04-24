@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { 
   Users, 
@@ -66,6 +67,15 @@ function Nosotros() {
 
   return (
     <div className="nosotros-page">
+      <Helmet>
+        <title>Sobre Nosotros | 10+ Años de Experiencia | Mi Servicio Técnico</title>
+        <meta name="description" content="Conoce nuestro servicio técnico de televisores en Getafe. Más de 10 años reparando TVs con profesionalidad, rapidez y garantía. Técnicos cualificados a tu servicio." />
+        <meta property="og:title" content="Sobre Nosotros | Mi Servicio Técnico de Televisores" />
+        <meta property="og:description" content="Más de 10 años de experiencia en reparación de televisores. Profesionalidad, rapidez y garantía." />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Sobre Nosotros | Mi Servicio Técnico" />
+        <meta name="twitter:description" content="Más de 10 años de experiencia en reparación de televisores." />
+      </Helmet>
       {/* Hero Section */}
       <section className="nosotros-hero">
         <div className="nosotros-hero-content">

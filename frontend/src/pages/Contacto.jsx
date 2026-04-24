@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import emailjs from '@emailjs/browser';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
@@ -76,6 +77,15 @@ function Contacto() {
 
   return (
     <div className="contacto">
+      <Helmet>
+        <title>Contacto | Solicita Presupuesto Gratis | Mi Servicio Técnico</title>
+        <meta name="description" content="Contacta con nosotros para reparar tu televisor en Getafe. Diagnóstico gratuito, presupuesto sin compromiso. Teléfono, email y formulario de contacto." />
+        <meta property="og:title" content="Contacto | Mi Servicio Técnico de Televisores" />
+        <meta property="og:description" content="Contacta con nosotros para reparar tu televisor. Diagnóstico gratuito y presupuesto sin compromiso." />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Contacto | Mi Servicio Técnico" />
+        <meta name="twitter:description" content="Contacta con nosotros para reparar tu televisor. Diagnóstico gratuito." />
+      </Helmet>
       <div className="container">
         {/* Header */}
         <div className="section-header">
