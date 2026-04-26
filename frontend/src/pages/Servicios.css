@@ -64,10 +64,34 @@
 
 .service-card-link {
   display: block;
-  padding: 2.5rem 2rem;
   text-align: center;
   text-decoration: none;
   color: inherit;
+  overflow: hidden;
+}
+
+/* Service Image */
+.service-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.service-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-image img {
+  transform: scale(1.05);
+}
+
+/* Service Card Content */
+.service-card-content {
+  padding: 2rem 2rem 2.5rem;
 }
 
 .service-icon {
