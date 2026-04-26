@@ -182,6 +182,10 @@ htmlcov/
 /site/
 .docusaurus/
 
+# Documentación privada/temporal (archivos específicos si es necesario)
+# /doc/privado/
+# /documentation/
+
 # ========================================
 # OTROS ARCHIVOS ESPECÍFICOS
 # ========================================

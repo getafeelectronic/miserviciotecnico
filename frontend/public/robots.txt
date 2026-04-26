@@ -1,0 +1,23 @@
+# robots.txt para miserviciotecnico
+# Configuración para motores de búsqueda
+
+# Permitir acceso a todos los bots
+User-agent: *
+Allow: /
+
+# Referencia al sitemap
+Sitemap: https://getafeelectronic.github.io/miserviciotecnico/sitemap.xml
+
+# URLs que no queremos que se indexen
+Disallow: /404.html
+Disallow: /*?*
+
+# Bots específicos
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Tiempo recomendado entre solicitudes (en segundos)
+Crawl-delay: 1
