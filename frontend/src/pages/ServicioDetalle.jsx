@@ -17,6 +17,7 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import DOMPurify from 'dompurify';
 import { getServiceBySlug } from '../lib/supabase';
 import './ServicioDetalle.css';
 
@@ -103,10 +104,13 @@ function ServicioDetalle() {
     );
   }
 
-  // Formatear long_description en párrafos
-  const paragraphs = service.long_description 
-    ? service.long_description.split('\n\n').filter(p => p.trim())
-    : [];
+  // Sanitizar HTML del long_description
+  const sanitizedHTML = service.long_description 
+    ? DOMPurify.sanitize(service.long_description, {
+        ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'strong', 'em', 'u', 'ul', 'ol', 'li', 'a', 'blockquote', 'code', 'pre'],
+        ALLOWED_ATTR: ['href', 'target', 'rel', 'class']
+      })
+    : '';
 
   return (
     <div className="servicio-detalle-page">
@@ -139,34 +143,30 @@ function ServicioDetalle() {
               <p className="servicio-intro">{service.description}</p>
             </motion.header>
 
-            {/* Content */}
+            {/* Service Image */}
+            {service.image_url && (
+              <motion.div 
+                className="servicio-image-container"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <img 
+                  src={service.image_url} 
+                  alt={service.title}
+                  className="servicio-image"
+                />
+              </motion.div>
+            )}
+
+            {/* Content - Renderizar HTML de Supabase */}
             <motion.div 
               className="servicio-content"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              {paragraphs.map((paragraph, index) => {
-                // Detectar si es un título (línea que empieza con **)
-                if (paragraph.trim().startsWith('**') && paragraph.trim().endsWith('**')) {
-                  const titleText = paragraph.replace(/\*\*/g, '').trim();
-                  return (
-                    <h2 key={index} className="servicio-subtitle">
-                      {titleText}
-                    </h2>
-                  );
-                }
-                
-                // Párrafo normal
-                return (
-                  <p key={index} className="servicio-paragraph">
-                    {paragraph.split('**').map((part, i) => 
-                      i % 2 === 0 ? part : <strong key={i}>{part}</strong>
-                    )}
-                  </p>
-                );
-              })}
-            </motion.div>
+              dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+            />
 
             {/* CTA Footer */}
             <motion.div 

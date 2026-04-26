@@ -172,12 +172,20 @@ function Servicios() {
                   whileHover={{ y: -5 }}
                 >
                   <Link to={`/servicios/${service.slug}`} className="service-card-link">
-                    <div className="service-icon">
-                      {renderIcon(service.icon_name)}
+                    {/* Imagen del servicio si existe */}
+                    {service.image_url && (
+                      <div className="service-image">
+                        <img src={service.image_url} alt={service.title} />
+                      </div>
+                    )}
+                    <div className="service-card-content">
+                      <div className="service-icon">
+                        {renderIcon(service.icon_name)}
+                      </div>
+                      <h3 className="service-title">{service.title}</h3>
+                      <p className="service-description">{service.description}</p>
+                      <span className="service-read-more">Leer más →</span>
                     </div>
-                    <h3 className="service-title">{service.title}</h3>
-                    <p className="service-description">{service.description}</p>
-                    <span className="service-read-more">Leer más →</span>
                   </Link>
                 </motion.div>
               ))}
