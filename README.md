@@ -2,8 +2,8 @@
 
 <div align="center">
 
-![Estado del Proyecto](https://img.shields.io/badge/estado-en%20desarrollo-yellow)
-![Versión](https://img.shields.io/badge/versión-0.2.0-green)
+![Estado del Proyecto](https://img.shields.io/badge/estado-producción-brightgreen)
+![Versión](https://img.shields.io/badge/versión-1.0.0-blue)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-blue)
 ![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-blue)
 
