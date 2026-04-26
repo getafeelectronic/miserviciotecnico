@@ -27,6 +27,72 @@ build/
 *.ear
 
 # ========================================
+# PYTHON
+# ========================================
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+virtualenv/
+
+# Bytecode compilado de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribuciones de Python
+.Python
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Tests y cobertura
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+*.cover
+
+# Mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Flask
+instance/
+.webassets-cache
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# ========================================
 # BASES DE DATOS Y DATOS LOCALES
 # ========================================
 *.sqlite
