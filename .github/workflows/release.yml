@@ -92,21 +92,26 @@ jobs:
             if [ -z "$COMMITS" ]; then
               CHANGELOG="Actualización de versión (sin cambios registrados en commits)"
             else
-              CHANGELOG="## Cambios
-
-$COMMITS
-
----
-**Versión anterior:** $PREVIOUS_TAG
-**Nueva versión:** ${{ steps.get_version.outputs.version }}"
+              CHANGELOG=$(cat <<-END
+          ## Cambios
+          
+          $COMMITS
+          
+          ---
+          **Versión anterior:** $PREVIOUS_TAG
+          **Nueva versión:** ${{ steps.get_version.outputs.version }}
+          END
+              )
             fi
           fi
           
           # Guardar changelog en archivo y variable
           echo "$CHANGELOG" > changelog.md
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          {
+            echo "changelog<<EOF"
+            echo "$CHANGELOG"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
       
       # 8. Crear Release en GitHub
       - name: Crear GitHub Release
