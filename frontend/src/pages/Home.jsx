@@ -1,16 +1,39 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Tv, Wrench, BadgeCheck, ArrowRight, Star } from 'lucide-react';
+import { 
+  Tv, 
+  Wrench, 
+  BadgeCheck, 
+  ArrowRight, 
+  Star,
+  Monitor,
+  Search,
+  Package
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
-import { getReviews } from '../lib/supabase';
+import { getReviews, getFeaturedServices } from '../lib/supabase';
 import './Home.css';
+
+// Mapeo de nombres de iconos a componentes de lucide-react
+const iconMap = {
+  'Tv': Tv,
+  'Wrench': Wrench,
+  'BadgeCheck': BadgeCheck,
+  'Monitor': Monitor,
+  'Search': Search,
+  'Package': Package
+};
 
 function Home() {
   // Estado para reviews dinámicas
   const [reviews, setReviews] = useState([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
+
+  // Estado para servicios dinámicos
+  const [services, setServices] = useState([]);
+  const [loadingServices, setLoadingServices] = useState(true);
 
   // Datos de fallback (se usan si Supabase no está configurado)
   const fallbackReviews = [
@@ -34,6 +57,27 @@ function Home() {
     }
   ];
 
+  const fallbackServices = [
+    {
+      slug: 'reparacion-tv-lcd-led',
+      title: 'Reparación TV LCD/LED',
+      description: 'Reparamos todo tipo de televisores LCD y LED de todas las marcas.',
+      icon_name: 'Tv'
+    },
+    {
+      slug: 'reparacion-tv-plasma',
+      title: 'Reparación TV Plasma',
+      description: 'Especialistas en solucionar problemas de televisores plasma.',
+      icon_name: 'Wrench'
+    },
+    {
+      slug: 'garantia-incluida',
+      title: 'Garantía Incluida',
+      description: 'Todas nuestras reparaciones incluyen garantía de 6 meses.',
+      icon_name: 'BadgeCheck'
+    }
+  ];
+
   // Cargar reviews desde Supabase al montar el componente
   useEffect(() => {
     async function loadReviews() {
@@ -53,23 +97,30 @@ function Home() {
     loadReviews();
   }, []);
 
-  const services = [
-    {
-      icon: <Tv size={40} />,
-      title: 'Reparación TV LCD/LED',
-      description: 'Reparamos todo tipo de televisores LCD y LED de todas las marcas.'
-    },
-    {
-      icon: <Wrench size={40} />,
-      title: 'Reparación TV Plasma',
-      description: 'Especialistas en solucionar problemas de televisores plasma.'
-    },
-    {
-      icon: <BadgeCheck size={40} />,
-      title: 'Garantía Incluida',
-      description: 'Todas nuestras reparaciones incluyen garantía de 6 meses.'
+  // Cargar servicios destacados desde Supabase
+  useEffect(() => {
+    async function loadServices() {
+      const data = await getFeaturedServices();
+      
+      // Si hay datos de Supabase, usarlos; si no, usar fallback
+      if (data && data.length > 0) {
+        setServices(data);
+      } else {
+        console.info('🔧 Usando servicios de fallback (Supabase no configurado o sin datos)');
+        setServices(fallbackServices);
+      }
+      
+      setLoadingServices(false);
     }
-  ];
+
+    loadServices();
+  }, []);
+
+  // Renderizar icono dinámicamente según icon_name
+  const renderIcon = (iconName) => {
+    const IconComponent = iconMap[iconName] || Wrench; // Default: Wrench
+    return <IconComponent size={40} />;
+  };
 
   return (
     <div className="home">
@@ -102,21 +153,35 @@ function Home() {
           </motion.div>
 
           <div className="services-grid">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                className="service-card"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="service-icon">{service.icon}</div>
-                <h3 className="service-title">{service.title}</h3>
-                <p className="service-description">{service.description}</p>
-              </motion.div>
-            ))}
+            {loadingServices ? (
+              // Loading skeleton
+              <>
+                {[...Array(3)].map((_, index) => (
+                  <div key={index} className="service-card-skeleton">
+                    <div className="skeleton-icon"></div>
+                    <div className="skeleton-title"></div>
+                    <div className="skeleton-description"></div>
+                  </div>
+                ))}
+              </>
+            ) : (
+              // Servicios reales
+              services.map((service, index) => (
+                <motion.div
+                  key={service.slug || index}
+                  className="service-card"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="service-icon">{renderIcon(service.icon_name)}</div>
+                  <h3 className="service-title">{service.title}</h3>
+                  <p className="service-description">{service.description}</p>
+                </motion.div>
+              ))
+            )}
           </div>
 
           <div className="section-cta">

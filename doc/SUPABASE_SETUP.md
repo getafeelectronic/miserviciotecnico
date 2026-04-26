@@ -1,6 +1,18 @@
-# Configuración de Supabase Database para Reviews
+# Configuración de Supabase Database
 
-Este documento explica cómo configurar Supabase Database para gestionar las opiniones de clientes dinámicamente.
+Este documento explica cómo configurar Supabase Database para gestionar contenido dinámico del sitio web:
+- **Reviews** (Opiniones de clientes)
+- **Social Links** (Enlaces a redes sociales)
+
+## 📋 Tabla de Contenidos
+
+1. [Requisitos Previos](#requisitos-previos)
+2. [Tabla: Reviews (Opiniones)](#tabla-reviews)
+3. [Tabla: Social Links (Redes Sociales)](#tabla-social-links)
+4. [Configurar Credenciales](#configurar-credenciales)
+5. [Desplegar y Verificar](#desplegar-y-verificar)
+6. [Gestión desde Supabase](#gestión-desde-supabase)
+7. [Troubleshooting](#troubleshooting)
 
 ## 📋 Requisitos Previos
 

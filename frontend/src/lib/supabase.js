@@ -97,3 +97,122 @@ export async function getFeaturedReviews(limit = 3) {
     return null
   }
 }
+
+/**
+ * Obtener enlaces de redes sociales activos ordenados por display_order
+ * @returns {Promise<Array>} Array de redes sociales o null si falla
+ */
+export async function getSocialLinks() {
+  if (!supabase) {
+    console.warn('Cliente de Supabase no inicializado')
+    return null
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('social_links')
+      .select('*')
+      .eq('is_active', true)
+      .order('display_order', { ascending: true })
+    
+    if (error) {
+      console.error('Error al obtener redes sociales:', error)
+      return null
+    }
+    
+    return data || []
+  } catch (err) {
+    console.error('Error de red al obtener redes sociales:', err)
+    return null
+  }
+}
+
+/**
+ * Obtener servicios destacados para mostrar en Home (preview)
+ * @returns {Promise<Array>} Array de servicios destacados o null si falla
+ */
+export async function getFeaturedServices() {
+  if (!supabase) {
+    console.warn('Cliente de Supabase no inicializado')
+    return null
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .eq('is_active', true)
+      .eq('is_featured', true)
+      .order('display_order', { ascending: true })
+    
+    if (error) {
+      console.error('Error al obtener servicios destacados:', error)
+      return null
+    }
+    
+    return data || []
+  } catch (err) {
+    console.error('Error de red al obtener servicios destacados:', err)
+    return null
+  }
+}
+
+/**
+ * Obtener todos los servicios activos para página de servicios
+ * @returns {Promise<Array>} Array de servicios o null si falla
+ */
+export async function getServices() {
+  if (!supabase) {
+    console.warn('Cliente de Supabase no inicializado')
+    return null
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .eq('is_active', true)
+      .order('display_order', { ascending: true })
+    
+    if (error) {
+      console.error('Error al obtener servicios:', error)
+      return null
+    }
+    
+    return data || []
+  } catch (err) {
+    console.error('Error de red al obtener servicios:', err)
+    return null
+  }
+}
+
+/**
+ * Obtener un servicio específico por su slug
+ * @param {string} slug - El slug del servicio
+ * @returns {Promise<Object|null>} Objeto del servicio o null si falla
+ */
+export async function getServiceBySlug(slug) {
+  if (!supabase) {
+    console.warn('Cliente de Supabase no inicializado')
+    return null
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .eq('slug', slug)
+      .eq('is_active', true)
+      .single() // Devuelve un objeto único, no array
+    
+    if (error) {
+      console.error('Error al obtener servicio:', error)
+      return null
+    }
+    
+    return data
+  } catch (err) {
+    console.error('Error de red al obtener servicio:', err)
+    return null
+  }
+}

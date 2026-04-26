@@ -53,6 +53,8 @@ jobs:
             "VITE_BUSINESS_HOURS:${{ secrets.VITE_BUSINESS_HOURS }}"
             "VITE_BUSINESS_COORDINATES_LAT:${{ secrets.VITE_BUSINESS_COORDINATES_LAT }}"
             "VITE_BUSINESS_COORDINATES_LNG:${{ secrets.VITE_BUSINESS_COORDINATES_LNG }}"
+            "VITE_SUPABASE_URL:${{ secrets.VITE_SUPABASE_URL }}"
+            "VITE_SUPABASE_ANON_KEY:${{ secrets.VITE_SUPABASE_ANON_KEY }}"
           )
           
           # Secrets opcionales (APIs externas)

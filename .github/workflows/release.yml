@@ -1,0 +1,186 @@
+name: Create Release
+
+# Ejecutar cuando se crea un tag que empiece con 'v'
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch: # Permitir ejecución manual
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. Checkout del código
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necesario para generar changelog
+      
+      # 2. Extraer versión del tag
+      - name: Obtener versión
+        id: get_version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          else
+            VERSION="v0.0.0-dev"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version_number=${VERSION#v}" >> $GITHUB_OUTPUT
+          echo "📦 Versión: $VERSION"
+      
+      # 3. Configurar Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      # 4. Instalar dependencias
+      - name: Instalar dependencias
+        working-directory: ./frontend
+        run: npm ci
+      
+      # 5. Build del proyecto
+      - name: Build proyecto
+        working-directory: ./frontend
+        run: npm run build
+        env:
+          VITE_BUSINESS_EMAIL: ${{ secrets.VITE_BUSINESS_EMAIL }}
+          VITE_BUSINESS_PHONE: ${{ secrets.VITE_BUSINESS_PHONE }}
+          VITE_BUSINESS_ADDRESS: ${{ secrets.VITE_BUSINESS_ADDRESS }}
+          VITE_BUSINESS_HOURS: ${{ secrets.VITE_BUSINESS_HOURS }}
+          VITE_BUSINESS_COORDINATES_LAT: ${{ secrets.VITE_BUSINESS_COORDINATES_LAT }}
+          VITE_BUSINESS_COORDINATES_LNG: ${{ secrets.VITE_BUSINESS_COORDINATES_LNG }}
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      
+      # 6. Crear archivo ZIP del build
+      - name: Crear archivo de distribución
+        run: |
+          cd frontend/dist
+          zip -r ../../miserviciotecnico-${{ steps.get_version.outputs.version }}.zip .
+          cd ../..
+          echo "✅ Archivo ZIP creado: miserviciotecnico-${{ steps.get_version.outputs.version }}.zip"
+      
+      # 7. Generar changelog automático
+      - name: Generar changelog
+        id: changelog
+        run: |
+          # Obtener el tag anterior
+          PREVIOUS_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) 2>/dev/null || echo "")
+          
+          if [ -z "$PREVIOUS_TAG" ]; then
+            echo "📝 Primera release - no hay tag anterior"
+            CHANGELOG="Primera versión del sistema de gestión de servicios técnicos."
+          else
+            echo "📝 Generando changelog desde $PREVIOUS_TAG hasta ${{ steps.get_version.outputs.version }}"
+            
+            # Obtener commits desde el último tag
+            COMMITS=$(git log $PREVIOUS_TAG..${{ steps.get_version.outputs.version }} --pretty=format:"- %s (%h)" --no-merges)
+            
+            if [ -z "$COMMITS" ]; then
+              CHANGELOG="Actualización de versión (sin cambios registrados en commits)"
+            else
+              CHANGELOG="## Cambios
+
+$COMMITS
+
+---
+**Versión anterior:** $PREVIOUS_TAG
+**Nueva versión:** ${{ steps.get_version.outputs.version }}"
+            fi
+          fi
+          
+          # Guardar changelog en archivo y variable
+          echo "$CHANGELOG" > changelog.md
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      
+      # 8. Crear Release en GitHub
+      - name: Crear GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          name: Release ${{ steps.get_version.outputs.version }}
+          body: |
+            # 🚀 Mi Servicio Técnico - ${{ steps.get_version.outputs.version }}
+            
+            ## 📦 Descargas
+            - **miserviciotecnico-${{ steps.get_version.outputs.version }}.zip** - Build completo del frontend
+            
+            ## 📝 Notas de la versión
+            
+            ${{ steps.changelog.outputs.changelog }}
+            
+            ---
+            
+            ## 🌐 Deploy
+            El sitio está desplegado automáticamente en: https://getafeelectronic.github.io/miserviciotecnico/
+            
+            ## 📊 Tecnologías
+            - React 18 + Vite
+            - Supabase (Reviews dinámicas + Servicios)
+            - React Router v6
+            - EmailJS (Formulario de contacto)
+            - Framer Motion (Animaciones)
+            - Lucide React (Iconos)
+            
+            ## 🔧 Para desarrolladores
+            
+            ### Instalación local:
+            ```bash
+            # Clonar repositorio
+            git clone https://github.com/getafeelectronic/miserviciotecnico.git
+            cd miserviciotecnico/frontend
+            
+            # Instalar dependencias
+            npm install
+            
+            # Configurar variables de entorno
+            cp .env.example .env
+            # Editar .env con tus credenciales
+            
+            # Iniciar servidor de desarrollo
+            npm run dev
+            ```
+            
+            ### Configuración de Supabase:
+            1. Ejecutar scripts SQL en `doc/`:
+               - `SUPABASE_REVIEWS.sql` - Tabla de reseñas
+               - `SUPABASE_SOCIAL_LINKS.sql` - Enlaces de redes sociales
+               - `SUPABASE_SERVICES.sql` - Catálogo de servicios con contenido extenso
+            2. Configurar variables de entorno:
+               - `VITE_SUPABASE_URL`
+               - `VITE_SUPABASE_ANON_KEY`
+            
+            ---
+            *Generado automáticamente por GitHub Actions*
+          files: |
+            miserviciotecnico-${{ steps.get_version.outputs.version }}.zip
+            changelog.md
+          draft: false
+          prerelease: false
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      # 9. Notificación de éxito
+      - name: Notificación de éxito
+        run: |
+          echo "✅ Release ${{ steps.get_version.outputs.version }} creado exitosamente!"
+          echo "📦 Archivo: miserviciotecnico-${{ steps.get_version.outputs.version }}.zip"
+          echo "🌐 URL: https://github.com/${{ github.repository }}/releases/tag/${{ steps.get_version.outputs.version }}"
+          echo ""
+          echo "El sitio se desplegará automáticamente via workflow 'deploy.yml'"
