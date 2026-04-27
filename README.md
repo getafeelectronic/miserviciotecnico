@@ -3,42 +3,118 @@
 <div align="center">
 
 ![Estado del Proyecto](https://img.shields.io/badge/estado-producción-brightgreen)
-![Versión](https://img.shields.io/badge/versión-1.0.0-blue)
+![Versión](https://img.shields.io/badge/versión-1.1.0-blue)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-blue)
-![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-blue)
+![Frontend Deploy](https://img.shields.io/badge/frontend-GitHub%20Pages-blue)
+![Backend Deploy](https://img.shields.io/badge/backend-Vercel-black)
 
-**Sitio web corporativo para servicio técnico especializado en reparación de televisores en Getafe, Madrid**
+**Sitio web corporativo con panel de administración para servicio técnico especializado en reparación de televisores en Getafe, Madrid**
 
-[🌐 Ver Demo](https://getafeelectronic.github.io/miserviciotecnico/) · [📞 Contacto](https://getafeelectronic.github.io/miserviciotecnico/#/contacto) · [📋 Documentación](./doc/)
+[🌐 Ver Sitio Web](https://getafeelectronic.github.io/miserviciotecnico/) · [🔧 Backend API](https://miserviciotecnico.vercel.app/) · [📞 Contacto](https://getafeelectronic.github.io/miserviciotecnico/#/contacto)
 
 </div>
 
 ---
 
-## 📖 Sobre el Proyecto
+## 🚀 Deploy en Producción
 
-**TeleRayo Electrónica** es un sitio web corporativo moderno para un servicio técnico especializado en la reparación de televisores en Getafe, Madrid. La web proporciona información sobre servicios, permite contacto directo con formulario funcional, muestra la ubicación en mapa interactivo y presenta la empresa profesionalmente.
+El proyecto está desplegado en dos plataformas:
 
-### 🎯 Objetivo
+| Componente | Plataforma | URL | Estado |
+|------------|------------|-----|--------|
+| **Frontend** (React + Vite) | GitHub Pages | https://getafeelectronic.github.io/miserviciotecnico/ | ✅ Activo |
+| **Backend** (Flask + Python) | Vercel | https://miserviciotecnico.vercel.app/ | ✅ Activo |
+| **Base de Datos** (PostgreSQL) | Supabase | https://lysejfhxackcmoksclvm.supabase.co | ✅ Activo |
 
-Crear una presencia web profesional que permita a los clientes:
-- ✅ Conocer los servicios de reparación ofrecidos
-- ✅ Contactar fácilmente mediante formulario funcional
-- ✅ Ver la ubicación exacta en Google Maps
-- ✅ Conocer la historia y valores de la empresa
-- ✅ Consultar información de contacto y horarios
-- 🔄 Leer artículos técnicos y consejos (próximamente)
+**Panel de Administración:** https://miserviciotecnico.vercel.app/auth/login
 
 ---
 
-## ✨ Características Implementadas
+## 🏗️ Arquitectura del Proyecto
 
-### 🏠 Landing Page Completa (v0.2.0)
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    CLIENTE (Navegador)                       │
+└───────────────────┬─────────────────────────────────────────┘
+                    │
+        ┌───────────┴───────────┐
+        │                       │
+        ▼                       ▼
+┌──────────────┐       ┌──────────────┐
+│   FRONTEND   │       │   BACKEND    │
+│  React+Vite  │◄─────►│    Flask     │
+│ GitHub Pages │       │   Vercel     │
+└──────────────┘       └──────┬───────┘
+                              │
+                              ▼
+                       ┌──────────────┐
+                       │   DATABASE   │
+                       │  PostgreSQL  │
+                       │   Supabase   │
+                       └──────────────┘
+```
+
+### Stack Tecnológico
+
+- **Frontend:** React 18, Vite, React Router, Framer Motion, Lucide Icons
+- **Backend:** Python 3.10+, Flask, Flask-Login, Supabase Client
+- **Base de Datos:** PostgreSQL (Supabase)
+- **Despliegue:** GitHub Actions (frontend) + Vercel (backend)
+- **Autenticación:** Flask-Login con sesiones seguras
+
+---
+
+## 📖 Sobre el Proyecto
+
+**TeleRayo Electrónica** es una aplicación web completa con gestión de contenido para un servicio técnico especializado en la reparación de televisores en Getafe, Madrid. Incluye un sitio web público con información de servicios y un panel de administración para gestionar reseñas de clientes.
+
+### 🎯 Objetivo
+
+Crear una presencia web profesional que permita:
+
+**Para Clientes:**
+- ✅ Conocer los servicios de reparación ofrecidos
+- ✅ Contactar fácilmente mediante formulario funcional
+- ✅ Ver la ubicación exacta en Google Maps
+- ✅ Leer reseñas de otros clientes
+- ✅ Consultar información de contacto y horarios
+
+**Para Administradores:**
+- ✅ Gestionar reseñas (crear, editar, eliminar, activar/desactivar)
+- ✅ Panel de administración seguro con autenticación
+- ✅ Formularios validados con fechas ISO 8601
+- ✅ Sistema de fechas dinámicas (visualización relativa automática)
+
+---
+
+## ✨ Características v1.1.0
+
+### 🏠 Landing Page Completa
 - Hero section con gradiente morado y llamadas a la acción
 - 5 secciones: Hero, Servicios, Por Qué Elegirnos, Reseñas, CTA
 - Diseño 100% responsive (mobile-first)
 - Animaciones suaves con Framer Motion
 - Trust badges con iconos (Diagnóstico Gratis, Reparación Rápida, Garantía)
+
+### ⭐ **NUEVO: CRUD Completo de Reseñas**
+- **Crear:** Formulario validado con nombre, rating, comentario y fecha
+- **Leer:** Visualización en landing page con cálculo dinámico de fechas
+- **Editar:** Modificación de reseñas existentes
+- **Eliminar:** Borrado con confirmación
+- **Toggle Activo/Inactivo:** Control de visibilidad
+
+### 📅 **NUEVO: Sistema de Fechas Dinámicas**
+- Backend almacena fechas en formato ISO 8601 (YYYY-MM-DD)
+- Frontend calcula automáticamente: "Hoy", "Ayer", "Hace 3 días", "Hace 2 semanas", "Hace 1 mes", "Hace 2 años"
+- Cálculos precisos con manejo correcto de meses y años
+- Sin dependencia de librerías externas (moment.js)
+
+### 🔐 Panel de Administración
+- Autenticación con Flask-Login
+- Gestión completa de reseñas (tabla con acciones)
+- Formularios con validación frontend y backend
+- Protección CSRF y sesiones seguras
+- Diseño responsive con Bootstrap 5
 
 ### 📄 Página Nosotros
 - Información completa de la empresa
@@ -57,7 +133,7 @@ Crear una presencia web profesional que permita a los clientes:
 
 ### 📍 Mapa Interactivo
 - Integración con Google Maps JavaScript API
-- Marker en ubicación exacta (C. Leoncio Rojas, 11, Getafe)
+- Marker en ubicación exacta
 - Responsive con alturas adaptativas
 - Cards de información de contacto
 
@@ -78,36 +154,35 @@ Crear una presencia web profesional que permita a los clientes:
 
 ---
 
-## 🚀 Instalación y Desarrollo
+## � TeleRayo Electrónica
 
-### Prerrequisitos
+### Información de Contacto
 
-```bash
-# Node.js v20 o superior
-# npm (incluido con Node.js)
-# Git
-```
+**Empresa:** TeleRayo Electrónica  
+**Servicio:** Reparación Profesional de Televisores  
+**Ubicación:** Getafe, Madrid (Zona Sur de Madrid)  
+**Especialización:** LCD, LED, Plasma, OLED, QLED  
+**Marcas:** Samsung, LG, Sony, Philips, Panasonic, Xiaomi y más  
 
-### Pasos de Instalación
+**Contacto:**
+- 📞 Teléfono: Configurado en `VITE_BUSINESS_PHONE`
+- 📧 Email: Configurado en `VITE_BUSINESS_EMAIL`
+- 📍 Dirección: Configurado en `VITE_BUSINESS_ADDRESS`
+- 🕒 Horario: Configurado en `VITE_BUSINESS_HOURS`
 
-1. **Clonar el repositorio**
-```bash
-git clone https://github.com/getafeelectronic/miserviciotecnico.git
-cd miserviciotecnico
-```
+**Ventajas:**
+- ✅ Diagnóstico gratuito
+- ✅ Reparación rápida (24-48h)
+- ✅ Garantía en todas las reparaciones
+- ✅ Más de 10 años de experiencia
+- ✅ Presupuesto sin compromiso
 
-2. **Instalar dependencias del frontend**
-```bash
-cd frontend
-npm install
-```
+---
 
-3. **Configurar variables de entorno**
-```bash
-cp .env.example .env
-```
+## 🔐 Variables de Entorno
 
-Edita el archivo `.env` con tus credenciales:
+### Frontend (.env)
+
 ```bash
 # EmailJS (https://www.emailjs.com/)
 VITE_EMAILJS_SERVICE_ID=tu_service_id
@@ -126,74 +201,206 @@ VITE_BUSINESS_COORDINATES_LAT=40.302205
 VITE_BUSINESS_COORDINATES_LNG=-3.7329539
 ```
 
-**Ver documentación completa:** [doc/SETUP-CONTACTO.md](doc/SETUP-CONTACTO.md)
+### Backend (.env)
 
-4. **Iniciar el servidor de desarrollo**
 ```bash
-npm run dev
-# La web estará disponible en http://localhost:5173
+# Flask
+SECRET_KEY=genera_una_clave_segura_aqui
+FLASK_ENV=production
+
+# Supabase (https://supabase.com/)
+SUPABASE_URL=https://tu-proyecto.supabase.co
+SUPABASE_KEY=tu_anon_key
+SUPABASE_SERVICE_KEY=tu_service_key
+
+# Administración
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=cambiar_password_seguro_en_produccion
+
+# Vercel (opcional, se configura automáticamente)
+VERCEL_URL=
 ```
 
-5. **Build para producción**
+**⚠️ Seguridad:**
+- Genera un `SECRET_KEY` seguro con: `python -c "import secrets; print(secrets.token_hex(32))"`
+- Nunca commitees archivos `.env` al repositorio
+- Usa contraseñas fuertes para `ADMIN_PASSWORD` en producción
+- Configura las variables de entorno en Vercel Dashboard para el backend
+
+---
+
+## 🚀 Instalación y Desarrollo Local
+
+### Prerrequisitos
+
 ```bash
+# Frontend
+Node.js v20 o superior
+npm (incluido con Node.js)
+
+# Backend
+Python 3.10 o superior
+pip (incluido con Python)
+
+# Ambos
+Git
+```
+
+### Instalación Completa
+
+1. **Clonar el repositorio**
+```bash
+git clone https://github.com/getafeelectronic/miserviciotecnico.git
+cd miserviciotecnico
+```
+
+2. **Configurar Frontend**
+```bash
+cd frontend
+npm install
+cp .env.example .env
+# Editar .env con tus credenciales (ver sección Variables de Entorno)
+npm run dev
+# Frontend disponible en http://localhost:5173
+```
+
+3. **Configurar Backend** (en otra terminal)
+```bash
+cd backend
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+pip install -r requirements.txt
+cp .env.example .env
+# Editar .env con tus credenciales (ver sección Variables de Entorno)
+
+# Iniciar servidor Flask
+python run.py
+# Backend disponible en http://localhost:5000
+```
+
+4. **Acceder al Panel de Administración**
+```
+URL: http://localhost:5000/auth/login
+Usuario: admin (definido en ADMIN_USERNAME)
+Contraseña: (definida en ADMIN_PASSWORD)
+```
+
+### Build para Producción
+
+**Frontend:**
+```bash
+cd frontend
 npm run build
 # Los archivos estáticos se generarán en dist/
+npm run preview  # Preview en http://localhost:4173
 ```
 
-6. **Preview del build**
+**Backend:**
 ```bash
-npm run preview
-# Preview en http://localhost:4173/miserviciotecnico/
+# Vercel se encarga del build automáticamente
+# O usar Gunicorn manualmente:
+gunicorn -w 4 -b 0.0.0.0:5000 'app:create_app()'
 ```
 
 ---
 
-## 🌐 Deploy y Sitio en Vivo
+## 📦 Deploy
 
-### Sitio Desplegado
+### Deploy del Frontend (GitHub Pages)
 
-**URL:** [https://getafeelectronic.github.io/miserviciotecnico/](https://getafeelectronic.github.io/miserviciotecnico/)
+El frontend se despliega automáticamente con GitHub Actions cuando se hace push a `main`:
 
-### Deploy Automático
+1. **Configurar GitHub Pages:**
+   - Ir a Settings → Pages
+   - Source: GitHub Actions
+   - Branch: `gh-pages` (se crea automáticamente)
 
-El sitio se deploya automáticamente a **GitHub Pages** mediante **GitHub Actions** cuando se hace push a las ramas `main` o `develop`.
+2. **El workflow `.github/workflows/deploy.yml` se ejecutará automáticamente:**
+   - Instala dependencias
+   - Ejecuta build de Vite
+   - Despliega a GitHub Pages
 
-**Workflow:**
+3. **Verificar deploy:**
+   - URL: https://getafeelectronic.github.io/miserviciotecnico/
+   - Check el badge en la sección Actions del repositorio
+
+### Deploy del Backend (Vercel)
+
+1. **Conectar repositorio a Vercel:**
+   - Ir a https://vercel.com/
+   - Import Git Repository
+   - Seleccionar `getafeelectronic/miserviciotecnico`
+
+2. **Configurar proyecto:**
+   - **Root Directory:** `backend`
+   - **Framework Preset:** Other
+   - **Build Command:** (dejar vacío)
+   - **Output Directory:** (dejar vacío)
+
+3. **Configurar variables de entorno en Vercel:**
+   - Settings → Environment Variables
+   - Agregar todas las variables del backend (.env):
+     ```
+     SECRET_KEY
+     SUPABASE_URL
+     SUPABASE_KEY
+     SUPABASE_SERVICE_KEY
+     ADMIN_USERNAME
+     ADMIN_PASSWORD
+     ```
+
+4. **Verificar `vercel.json`:**
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.py"
+    }
+  ],
+  "env": {
+    "FLASK_ENV": "production"
+  }
+}
 ```
-Push a develop/main → GitHub Actions → Build (Vite) → Deploy a gh-pages → Sitio actualizado
+
+5. **Deploy:**
+   - Vercel desplegará automáticamente en cada push a `main`
+   - URL: https://miserviciotecnico.vercel.app/
+
+### Deploy de Base de Datos (Supabase)
+
+1. **Crear proyecto en Supabase:**
+   - Ir a https://supabase.com/
+   - New Project
+
+2. **Crear tabla `reviews`:**
+```sql
+CREATE TABLE reviews (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  text TEXT NOT NULL,
+  date TEXT NOT NULL,  -- Formato ISO 8601: YYYY-MM-DD
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 ```
 
-**Ver estado del deploy:**
-```bash
-# Listar workflows
-gh workflow list
-
-# Ver últimos runs del deploy
-gh run list --workflow=deploy.yml --limit 5
-
-# Ver logs de un run específico
-gh run view [run-id] --log
-```
-
-### Configuración Necesaria (Primera vez)
-
-1. **GitHub Secrets** (Settings → Secrets and variables → Actions):
-   - `VITE_EMAILJS_SERVICE_ID`
-   - `VITE_EMAILJS_TEMPLATE_ID`
-   - `VITE_EMAILJS_PUBLIC_KEY`
-   - `VITE_GOOGLE_MAPS_API_KEY`
-   - `VITE_BUSINESS_EMAIL`
-   - `VITE_BUSINESS_PHONE`
-   - `VITE_BUSINESS_ADDRESS`
-   - `VITE_BUSINESS_HOURS`
-   - `VITE_BUSINESS_COORDINATES_LAT`
-   - `VITE_BUSINESS_COORDINATES_LNG`
-
-2. **GitHub Pages** (Settings → Pages):
-   - Source: `Branch gh-pages` + `/ (root)`
-   - Save y esperar 1-2 minutos
-
-**📖 Ver guía completa:** [doc/DEPLOY-GITHUB-PAGES.md](doc/DEPLOY-GITHUB-PAGES.md)
+3. **Copiar credenciales:**
+   - Project Settings → API
+   - Copiar `URL` y `anon key` al `.env`
 
 ---
 
@@ -203,37 +410,63 @@ gh run view [run-id] --log
 miserviciotecnico/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml           # CI/CD con GitHub Actions
-├── doc/                         # Documentación del proyecto
-│   ├── CONVENTIONAL-COMMITS.md  # Estándar de commits
-│   ├── DEPLOY-GITHUB-PAGES.md   # Guía de deploy completa
-│   ├── ROADMAP.md               # Hoja de ruta del proyecto
-│   ├── SETUP-CONTACTO.md        # Configurar formulario contacto
-│   ├── SETUP-MAPS.md            # Configurar Google Maps
-│   └── STACK-DECISION.md        # Decisiones arquitectónicas
+│       └── deploy.yml              # CI/CD para frontend (GitHub Pages)
+├── backend/
+│   ├── api/
+│   │   └── index.py                # Entry point para Vercel
+│   ├── app/
+│   │   ├── __init__.py             # Factory pattern de Flask
+│   │   ├── auth.py                 # Autenticación con Flask-Login
+│   │   ├── routes/
+│   │   │   ├── admin.py            # Dashboard de administración
+│   │   │   └── reviews.py          # CRUD de reseñas
+│   │   ├── templates/
+│   │   │   ├── admin/
+│   │   │   │   └── dashboard.html  # Panel de administración
+│   │   │   ├── auth/
+│   │   │   │   └── login.html      # Página de login
+│   │   │   └── reviews/
+│   │   │       ├── list.html       # Listado de reseñas
+│   │   │       └── form.html       # Formulario crear/editar
+│   │   └── utils/
+│   │       └── supabase_client.py  # Cliente Supabase
+│   ├── run.py                      # Script para desarrollo local
+│   ├── requirements.txt            # Dependencias Python
+│   ├── vercel.json                 # Configuración Vercel
+│   └── .env                        # Variables de entorno (no commiteado)
+├── doc/                            # Documentación del proyecto
+│   ├── CONVENTIONAL-COMMITS.md     # Estándar de commits
+│   ├── DEPLOY-GITHUB-PAGES.md      # Guía de deploy completa
+│   ├── ROADMAP.md                  # Hoja de ruta del proyecto
+│   ├── SETUP-CONTACTO.md           # Configurar formulario contacto
+│   ├── SETUP-MAPS.md               # Configurar Google Maps
+│   └── STACK-DECISION.md           # Decisiones arquitectónicas
 ├── frontend/
 │   ├── public/
-│   │   ├── .nojekyll            # Previene Jekyll en GitHub Pages
-│   │   └── icon.ico             # Favicon
+│   │   ├── .nojekyll               # Previene Jekyll en GitHub Pages
+│   │   └── icon.ico                # Favicon
 │   ├── src/
-│   │   ├── components/          # Componentes reutilizables
+│   │   ├── components/             # Componentes reutilizables
 │   │   │   ├── CookieConsent.jsx + .css  # Banner GDPR
-│   │   │   ├── Footer.jsx                # Footer con versión dinámica
-│   │   │   ├── Header.jsx                # Navegación responsive
-│   │   │   ├── Hero.jsx                  # Hero section reutilizable
+│   │   │   ├── Footer.jsx + .css         # Footer con redes sociales dinámicas
+│   │   │   ├── Header.jsx + .css         # Navegación responsive
+│   │   │   ├── Hero.jsx + .css           # Hero section reutilizable
 │   │   │   └── Layout.jsx                # Layout wrapper
-│   │   ├── pages/               # Páginas principales
-│   │   │   ├── Home.jsx + .css           # Landing page
-│   │   │   ├── Nosotros.jsx + .css       # Sobre la empresa
-│   │   │   ├── Contacto.jsx + .css       # Formulario + mapa
-│   │   │   └── Services.jsx              # Servicios (placeholder)
-│   │   ├── App.jsx              # Componente raíz
-│   │   └── main.jsx             # Entry point
-│   ├── .env.example             # Template de variables
-│   ├── vite.config.js           # Configuración Vite + GitHub Pages
-│   └── package.json             # Dependencias
+│   │   ├── lib/
+│   │   │   └── supabase.js         # Cliente Supabase para frontend
+│   │   ├── pages/                  # Páginas principales
+│   │   │   ├── Home.jsx + .css     # Landing con sistema de fechas dinámicas
+│   │   │   ├── Nosotros.jsx + .css # Sobre la empresa
+│   │   │   ├── Contacto.jsx + .css # Formulario + mapa
+│   │   │   └── Services.jsx        # Servicios (placeholder)
+│   │   ├── App.jsx                 # Componente raíz con router
+│   │   └── main.jsx                # Entry point
+│   ├── .env.example                # Template de variables
+│   ├── vite.config.js              # Configuración Vite + GitHub Pages
+│   └── package.json                # Dependencias y scripts
 ├── .gitignore
-└── README.md                    # Este archivo
+├── RELEASE_NOTES_v1.1.0.md         # Changelog del release actual
+└── README.md                       # Este archivo
 ```
 
 ---
@@ -246,25 +479,37 @@ miserviciotecnico/
 - **React Router v7** - Navegación SPA cliente
 - **React Hook Form 7.73.1** - Manejo y validación de formularios
 - **Framer Motion 12.38.0** - Animaciones y transiciones
+- **Lucide React** - Iconos modernos
+- **Supabase JS** - Cliente para consultas de BD
+
+### 🐍 Backend
+- **Python 3.10+** - Lenguaje de programación
+- **Flask 3.1.0** - Framework web minimalista
+- **Flask-Login** - Gestión de sesiones y autenticación
+- **Supabase Python** - Cliente oficial de Supabase
+- **Gunicorn** - Servidor WSGI para producción
+
+### 🗄️ Base de Datos
+- **PostgreSQL** - Base de datos relacional
+- **Supabase** - Backend as a Service (hosting + API REST automática)
 
 ### 🌐 APIs y Servicios Externos
 - **EmailJS** - Envío de emails desde frontend (sin backend)
 - **Google Maps JavaScript API** - Mapas interactivos y markers
 - **GitHub API** - Obtener versión dinámica para Footer
+- **Supabase Storage** - Almacenamiento de imágenes (logo)
 
 ### 🚀 Deploy y CI/CD
-- **GitHub Pages** - Hosting estático gratuito (rama `gh-pages`)
-- **GitHub Actions** - CI/CD automático (workflow `deploy.yml`)
+- **GitHub Pages** - Hosting frontend estático gratuito
+- **Vercel** - Hosting backend serverless gratuito
+- **GitHub Actions** - CI/CD automático para frontend
 - **Node.js 20** - Runtime para build
-- **npm** - Gestor de paquetes
 
 ### 📦 Arquitectura
-- **SPA (Single Page Application)** - Navegación sin recargas
-- **React SPA + APIs Externas** - Sin backend propio (costo $0-5/mes)
-- **Serverless** - EmailJS maneja envío de emails
-- **Static Site** - HTML/CSS/JS estático en GitHub Pages
-
----
+- **SPA (Single Page Application)** - Frontend con navegación sin recargas
+- **API REST + Admin Panel** - Backend Flask con templates Jinja2
+- **Serverless Functions** - Backend desplegado como funciones en Vercel
+- **JAMstack** - JavaScript, APIs y Markup precompilado
 
 ---
 
@@ -325,7 +570,25 @@ Las contribuciones son bienvenidas. Para cambios importantes:
 - [x] Deploy automático a GitHub Pages
 - [x] Documentación completa del proyecto
 
-### 🔄 Fase 2 - Contenido y Servicios (v0.3.0) - **EN PROGRESO**
+### ✅ Fase 2 - Backend y Administración (v1.1.0) - **COMPLETADO**
+- [x] Backend Flask con API REST
+- [x] Base de datos PostgreSQL en Supabase
+- [x] Panel de administración con autenticación
+- [x] **CRUD Completo de Reseñas:**
+  - [x] Crear reseñas con validación
+  - [x] Listar todas las reseñas
+  - [x] Editar reseñas existentes
+  - [x] Eliminar reseñas con confirmación
+  - [x] Toggle activar/desactivar reseñas
+- [x] **Sistema de Fechas Dinámicas:**
+  - [x] Backend guarda fechas ISO 8601 (YYYY-MM-DD)
+  - [x] Frontend calcula "Hoy", "Ayer", "Hace X días/semanas/meses/años"
+  - [x] Función `getRelativeTime()` con cálculos precisos
+- [x] Deploy backend en Vercel
+- [x] Deploy frontend en GitHub Pages
+- [x] Integración completa frontend ↔ backend
+
+### 🔄 Fase 3 - Contenido y Servicios (v1.2.0) - **EN PROGRESO**
 - [ ] Página de Servicios detallada
   - [ ] Reparación de TV LCD/LED/OLED
   - [ ] Reparación de Smart TV
@@ -334,22 +597,21 @@ Las contribuciones son bienvenidas. Para cambios importantes:
 - [ ] Galería de trabajos realizados
 - [ ] Sección de marcas soportadas expandida
 - [ ] FAQs (Preguntas frecuentes)
+- [ ] Migrar reseñas existentes a formato ISO 8601
 
-### 🚀 Fase 3 - Integración Avanzada (v0.4.0) - **PLANIFICADO**
-- [ ] Blog técnico con artículos
-  - [ ] Tips de mantenimiento
-  - [ ] Guías de resolución de problemas
-  - [ ] Noticias de tecnología
+### 🚀 Fase 4 - Integración Avanzada (v1.3.0) - **PLANIFICADO**
+- [ ] Blog técnico con artículos (CRUD desde admin)
 - [ ] Integración Google My Business (reseñas reales)
 - [ ] Sistema de citas online (Google Calendar API)
 - [ ] Chatbot de asistencia básica
+- [ ] Dashboard de métricas (reseñas, visitas, contactos)
 
-### 🌟 Fase 4 - Optimización y SEO (v1.0.0) - **FUTURO**
+### 🌟 Fase 5 - Optimización y SEO (v2.0.0) - **FUTURO**
 - [ ] SEO optimizado (meta tags, schema.org)
 - [ ] Progressive Web App (PWA)
 - [ ] Lighthouse score >90 en todas las categorías
 - [ ] Analytics y métricas (Google Analytics 4)
-- [ ] Sitemap y robots.txt
+- [ ] Sitemap y robots.txt dinámicos
 - [ ] Open Graph y Twitter Cards
 
 ### 💡 Backlog (Ideas Futuras)
@@ -358,21 +620,30 @@ Las contribuciones son bienvenidas. Para cambios importantes:
 - Portal del cliente (seguimiento de reparaciones)
 - App móvil para técnicos
 - Sistema de notificaciones (SMS/Email)
+- Upload de imágenes en reseñas
+- Moderación de reseñas públicas
 
 **Ver roadmap detallado:** [doc/ROADMAP.md](doc/ROADMAP.md)
 
 ---
 
-## 📞 Contacto
+## 📞 Contacto y Enlaces
 
-**TeleRayo Electrónica**  
-📍 C. Leoncio Rojas, 11, 28901 Getafe, Madrid  
-📞 +34 916 95 07 81  
-📧 ruizrjan@gmail.com  
-🕒 Lun-Vie: 9:00 - 19:00  
+### 🏢 TeleRayo Electrónica
 
-🌐 [Sitio Web](https://getafeelectronic.github.io/miserviciotecnico/)  
-💻 [GitHub](https://github.com/getafeelectronic/miserviciotecnico)
+**Información de Contacto:**
+- 📍 Dirección: C. Leoncio Rojas, 11, 28901 Getafe, Madrid
+- 📞 Teléfono: +34 916 95 07 81
+- 📧 Email: ruizrjan@gmail.com
+- 🕒 Horario: Lun-Vie: 9:00 - 19:00
+
+**Enlaces del Proyecto:**
+- 🌐 [Sitio Web (Frontend)](https://getafeelectronic.github.io/miserviciotecnico/)
+- 🔧 [Backend API](https://miserviciotecnico.vercel.app/)
+- 🔐 [Panel de Administración](https://miserviciotecnico.vercel.app/auth/login)
+- 💻 [Repositorio GitHub](https://github.com/getafeelectronic/miserviciotecnico)
+- 📋 [Releases](https://github.com/getafeelectronic/miserviciotecnico/releases)
+- 🐛 [Issues](https://github.com/getafeelectronic/miserviciotecnico/issues)
 
 ---
 
@@ -386,8 +657,11 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para
 
 - Gracias a todos los clientes que confían en nuestro servicio
 - Comunidad de React y Vite por las excelentes herramientas
+- Equipo de Flask por el framework web minimalista
+- Supabase por el Backend as a Service
 - EmailJS por el servicio de envío de emails gratuito
 - Google Maps Platform por la API de mapas
+- Vercel y GitHub Pages por el hosting gratuito
 
 ---
 
@@ -397,7 +671,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para
 
 ---
 
-**Versión:** 0.2.0 | **Última actualización:** Enero 2025
+**Versión:** 1.1.0 | **Última actualización:** Abril 2026
 
 Hecho con ❤️ en Getafe, Madrid
 
