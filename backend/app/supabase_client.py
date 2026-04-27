@@ -89,6 +89,20 @@ class SupabaseClient:
         return response.data
     
     @classmethod
+    def get_review_by_id(cls, review_id):
+        """Obtiene una review por ID"""
+        client = cls.get_client()
+        response = client.table('reviews').select('*').eq('id', review_id).execute()
+        return response.data[0] if response.data else None
+    
+    @classmethod
+    def create_review(cls, data):
+        """Crea una nueva review"""
+        client = cls.get_client()
+        response = client.table('reviews').insert(data).execute()
+        return response.data[0] if response.data else None
+    
+    @classmethod
     def update_review(cls, review_id, data):
         """Actualiza una review"""
         client = cls.get_client()

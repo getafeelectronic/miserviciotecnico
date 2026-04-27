@@ -16,6 +16,63 @@ import Hero from '../components/Hero';
 import { getReviews, getFeaturedServices } from '../lib/supabase';
 import './Home.css';
 
+// Función para calcular tiempo relativo desde una fecha
+function getRelativeTime(dateString) {
+  // Si ya es un texto relativo o vacío, devolverlo tal cual
+  if (!dateString || dateString.includes('Hace') || dateString.includes('Ayer') || dateString.includes('Hoy')) {
+    return dateString;
+  }
+  
+  try {
+    const date = new Date(dateString);
+    const now = new Date();
+    
+    // Resetear horas para comparación de días exactos
+    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    const diffInMs = nowOnly - dateOnly;
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    
+    // Hoy
+    if (diffInDays === 0) return 'Hoy';
+    
+    // Ayer
+    if (diffInDays === 1) return 'Ayer';
+    
+    // Hace X días (menos de 7 días)
+    if (diffInDays < 7) return `Hace ${diffInDays} días`;
+    
+    // Hace X semanas (menos de 30 días)
+    if (diffInDays < 30) {
+      const weeks = Math.floor(diffInDays / 7);
+      return `Hace ${weeks} ${weeks === 1 ? 'semana' : 'semanas'}`;
+    }
+    
+    // Calcular diferencia en meses (más preciso)
+    const yearsDiff = now.getFullYear() - date.getFullYear();
+    const monthsDiff = now.getMonth() - date.getMonth();
+    const totalMonths = yearsDiff * 12 + monthsDiff;
+    
+    // Hace X meses (menos de 12 meses)
+    if (totalMonths < 12) {
+      return `Hace ${totalMonths} ${totalMonths === 1 ? 'mes' : 'meses'}`;
+    }
+    
+    // Hace X años (12 meses o más)
+    const years = Math.floor(totalMonths / 12);
+    const remainingMonths = totalMonths % 12;
+    
+    if (remainingMonths === 0) {
+      return `Hace ${years} ${years === 1 ? 'año' : 'años'}`;
+    } else {
+      return `Hace ${years} ${years === 1 ? 'año' : 'años'} y ${remainingMonths} ${remainingMonths === 1 ? 'mes' : 'meses'}`;
+    }
+  } catch (e) {
+    return dateString; // Si hay error, devolver el original
+  }
+}
+
 // Mapeo de nombres de iconos a componentes de lucide-react
 const iconMap = {
   'Tv': Tv,
@@ -291,7 +348,7 @@ function Home() {
                       <div className="author-avatar">{review.name[0]}</div>
                     <div>
                       <div className="author-name">{review.name}</div>
-                      <div className="review-date">{review.date}</div>
+                      <div className="review-date">{getRelativeTime(review.date)}</div>
                     </div>
                   </div>
                   <div className="review-rating">

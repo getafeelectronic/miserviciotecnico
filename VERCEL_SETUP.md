@@ -15,6 +15,10 @@
 2. Click en **"Add New"** → **"Project"**
 3. Importa el repositorio: `getafeelectronic/miserviciotecnico`
 4. Selecciona la rama: `main` (o la que quieras desplegar)
+5. **IMPORTANTE**: En "Configure Project", establece:
+   - **Root Directory**: `backend` ← Selecciona del dropdown
+   - **Framework Preset**: Other
+   - Esto le dice a Vercel que solo despliegue el directorio backend/
 
 ### 2. Configurar Variables de Entorno
 
@@ -45,25 +49,21 @@ ADMIN_PASSWORD=tu_password_seguro_aqui
 
 ### 3. Verificar Configuración
 
-El archivo `vercel.json` ya está configurado:
+El archivo `backend/vercel.json` ya está configurado con rutas relativas:
 
 ```json
 {
   "version": 2,
   "builds": [
     {
-      "src": "backend/api/index.py",
+      "src": "api/index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "backend/api/index.py"
-    },
-    {
       "src": "/(.*)",
-      "dest": "backend/api/index.py"
+      "dest": "api/index.py"
     }
   ],
   "env": {
@@ -71,6 +71,8 @@ El archivo `vercel.json` ya está configurado:
   }
 }
 ```
+
+**Nota**: Como el Root Directory es `backend/`, las rutas en vercel.json son relativas a ese directorio.
 
 ### 4. Deploy
 
@@ -105,6 +107,7 @@ curl https://tu-proyecto.vercel.app/auth/login
 ### Error 404
 - ✅ **Verifica** que las variables de entorno estén configuradas
 - ✅ **Verifica** que la rama correcta esté desplegada
+- ✅ **Verifica Root Directory**: Settings → General → Root Directory debe ser `backend`
 - ✅ **Limpia el cache** en Vercel: Settings → "Clear Cache and Redeploy"
 
 ### Error 500
