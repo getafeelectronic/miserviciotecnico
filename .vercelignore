@@ -1,0 +1,29 @@
+# Frontend (se despliega en GitHub Pages)
+frontend/
+
+# Development
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+docs/
+
+# GitHub specific
+.github/

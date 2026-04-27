@@ -8,12 +8,15 @@
   ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "backend/api/index.py"
+    },
+    {
       "src": "/(.*)",
       "dest": "backend/api/index.py"
     }
   ],
   "env": {
-    "FLASK_APP": "backend/api/index.py",
     "FLASK_ENV": "production"
   }
 }
