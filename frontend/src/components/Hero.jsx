@@ -1,9 +1,11 @@
 import { ArrowRight, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import useAnalytics from '../hooks/useAnalytics';
 import './Hero.css';
 
 function Hero() {
+  const { trackClick } = useAnalytics();
   return (
     <section className="hero">
       <div className="hero-container">
@@ -21,12 +23,20 @@ function Hero() {
             Diagnóstico gratuito y garantía en todas nuestras reparaciones.
           </p>
           <div className="hero-buttons">
-            <Link to="/contacto" className="btn btn-primary">
+            <Link 
+              to="/contacto" 
+              className="btn btn-primary"
+              onClick={() => trackClick('solicitar_presupuesto_hero', 'button')}
+            >
               <Phone size={20} />
               Solicitar Presupuesto
               <ArrowRight size={20} />
             </Link>
-            <Link to="/servicios" className="btn btn-secondary">
+            <Link 
+              to="/servicios" 
+              className="btn btn-secondary"
+              onClick={() => trackClick('ver_servicios_hero', 'button')}
+            >
               Ver Servicios
             </Link>
           </div>

@@ -24,6 +24,10 @@ class Config:
     SUPABASE_KEY = os.getenv('SUPABASE_KEY')
     SUPABASE_SERVICE_KEY = os.getenv('SUPABASE_SERVICE_KEY')
     
+    # MongoDB Atlas (OBSOLETO - Ahora usamos Supabase para analytics)
+    # MONGODB_URI = os.getenv('MONGODB_URI')
+    # MONGODB_DATABASE = os.getenv('MONGODB_DATABASE', 'miserviciotecnico_analytics')
+    
     # Admin Credentials
     ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin')
     ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')

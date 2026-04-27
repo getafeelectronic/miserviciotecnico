@@ -12,9 +12,12 @@ import {
   MapPin,
   TrendingUp
 } from 'lucide-react';
+import useAnalytics from '../hooks/useAnalytics';
 import './Nosotros.css';
 
 function Nosotros() {
+  // Analytics: tracking automático de pageview y duración
+  const { trackClick } = useAnalytics();
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
@@ -272,7 +275,11 @@ function Nosotros() {
           <motion.div className="cta-content" {...fadeInUp}>
             <h2>¿Necesitas reparar tu televisor?</h2>
             <p>Contacta con nosotros para un diagnóstico gratuito y sin compromiso</p>
-            <a href="/contacto" className="cta-button">
+            <a 
+              href="/contacto" 
+              className="cta-button"
+              onClick={() => trackClick('solicitar_presupuesto_nosotros', 'button')}
+            >
               Solicitar Presupuesto Gratis
             </a>
           </motion.div>
