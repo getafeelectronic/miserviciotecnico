@@ -198,6 +198,176 @@ class SupabaseClient:
             logger.error(f"Error al procesar/subir imagen: {str(e)}")
             raise
     
+    # ===== MÉTODOS DE ANALYTICS =====
+    
+    @classmethod
+    def get_analytics_summary(cls):
+        """Obtiene resumen general de analytics"""
+        try:
+            client = cls.get_client()
+            
+            # Total de eventos
+            total_response = client.table('analytics_events').select('id', count='exact').execute()
+            
+            # Pageviews totales
+            pageviews_response = client.table('analytics_events')\
+                .select('id', count='exact')\
+                .eq('event_type', 'pageview')\
+                .execute()
+            
+            # Páginas únicas visitadas
+            unique_pages_response = client.table('analytics_events')\
+                .select('page')\
+                .eq('event_type', 'pageview')\
+                .execute()
+            
+            unique_pages = len(set([item['page'] for item in unique_pages_response.data]))
+            
+            return {
+                'total_events': total_response.count,
+                'total_pageviews': pageviews_response.count,
+                'unique_pages': unique_pages
+            }
+        except Exception as e:
+            logger.error(f"Error al obtener resumen de analytics: {str(e)}")
+            return {'total_events': 0, 'total_pageviews': 0, 'unique_pages': 0}
+    
+    @classmethod
+    def get_pageviews_by_day(cls, days=30):
+        """Obtiene pageviews agrupados por día"""
+        try:
+            from datetime import datetime, timedelta
+            
+            client = cls.get_client()
+            start_date = datetime.now() - timedelta(days=days)
+            
+            logger.debug(f"Consultando pageviews desde {start_date.isoformat()}")
+            
+            # Obtener todos los pageviews del período
+            response = client.table('analytics_events')\
+                .select('created_at')\
+                .eq('event_type', 'pageview')\
+                .gte('created_at', start_date.isoformat())\
+                .order('created_at')\
+                .execute()
+            
+            logger.debug(f"Se obtuvieron {len(response.data)} pageviews")
+            
+            # Agrupar por día
+            daily_counts = {}
+            for event in response.data:
+                # Extraer solo la fecha (YYYY-MM-DD)
+                date_str = event['created_at'][:10]
+                daily_counts[date_str] = daily_counts.get(date_str, 0) + 1
+            
+            # Generar lista completa de días (incluso con 0 visitas)
+            result = []
+            current_date = start_date.date()
+            end_date = datetime.now().date()
+            
+            while current_date <= end_date:
+                date_str = current_date.isoformat()
+                result.append({
+                    'date': date_str,
+                    'count': daily_counts.get(date_str, 0)
+                })
+                current_date += timedelta(days=1)
+            
+            logger.debug(f"Resultado final: {len(result)} días procesados")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error al obtener pageviews por día: {str(e)}", exc_info=True)
+            return []
+    
+    @classmethod
+    def get_top_pages(cls, limit=10):
+        """Obtiene las páginas más visitadas"""
+        try:
+            client = cls.get_client()
+            
+            logger.debug("Consultando top páginas...")
+            
+            response = client.table('analytics_events')\
+                .select('page')\
+                .eq('event_type', 'pageview')\
+                .execute()
+            
+            logger.debug(f"Se obtuvieron {len(response.data)} eventos de pageview")
+            
+            # Contar ocurrencias (filtrando valores vacíos o None)
+            page_counts = {}
+            for event in response.data:
+                page = event.get('page')
+                
+                # Filtrar valores inválidos
+                if page and page.strip():
+                    page_counts[page] = page_counts.get(page, 0) + 1
+            
+            logger.debug(f"Páginas únicas encontradas: {len(page_counts)}")
+            logger.debug(f"Páginas: {list(page_counts.keys())[:10]}")
+            
+            # Ordenar y limitar
+            sorted_pages = sorted(page_counts.items(), key=lambda x: x[1], reverse=True)[:limit]
+            
+            result = [{'page': page, 'count': count} for page, count in sorted_pages]
+            logger.debug(f"Top {len(result)} páginas: {result}")
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error al obtener top páginas: {str(e)}", exc_info=True)
+            return []
+    
+    @classmethod
+    def get_device_stats(cls):
+        """Obtiene estadísticas por tipo de dispositivo"""
+        try:
+            client = cls.get_client()
+            
+            response = client.table('analytics_events')\
+                .select('device')\
+                .eq('event_type', 'pageview')\
+                .execute()
+            
+            # Contar por dispositivo
+            device_counts = {}
+            for event in response.data:
+                device = event.get('device', 'unknown')
+                device_counts[device] = device_counts.get(device, 0) + 1
+            
+            return [{'device': device, 'count': count} for device, count in device_counts.items()]
+            
+        except Exception as e:
+            logger.error(f"Error al obtener estadísticas de dispositivos: {str(e)}")
+            return []
+    
+    @classmethod
+    def get_traffic_origins(cls, limit=5):
+        """Obtiene los orígenes de tráfico principales"""
+        try:
+            client = cls.get_client()
+            
+            response = client.table('analytics_events')\
+                .select('origin')\
+                .eq('event_type', 'pageview')\
+                .execute()
+            
+            # Contar por origen
+            origin_counts = {}
+            for event in response.data:
+                origin = event.get('origin', 'unknown')
+                origin_counts[origin] = origin_counts.get(origin, 0) + 1
+            
+            # Ordenar y limitar
+            sorted_origins = sorted(origin_counts.items(), key=lambda x: x[1], reverse=True)[:limit]
+            
+            return [{'origin': origin, 'count': count} for origin, count in sorted_origins]
+            
+        except Exception as e:
+            logger.error(f"Error al obtener orígenes de tráfico: {str(e)}")
+            return []
+    
     @classmethod
     def get_public_url(cls, bucket_name, file_path):
         """Obtiene la URL pública de un archivo"""

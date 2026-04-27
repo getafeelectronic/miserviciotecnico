@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
 import { getReviews, getFeaturedServices } from '../lib/supabase';
+import useAnalytics from '../hooks/useAnalytics';
 import './Home.css';
 
 // Función para calcular tiempo relativo desde una fecha
@@ -84,6 +85,9 @@ const iconMap = {
 };
 
 function Home() {
+  // Analytics: tracking automático de pageview y duración
+  const { trackClick } = useAnalytics();
+  
   // Estado para reviews dinámicas
   const [reviews, setReviews] = useState([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
@@ -242,7 +246,11 @@ function Home() {
           </div>
 
           <div className="section-cta">
-            <Link to="/servicios" className="btn-link">
+            <Link 
+              to="/servicios" 
+              className="btn-link"
+              onClick={() => trackClick('ver_todos_servicios', 'link')}
+            >
               Ver todos los servicios
               <ArrowRight size={20} />
             </Link>
@@ -379,7 +387,11 @@ function Home() {
             <p className="cta-text">
               Contáctanos hoy y obtén un diagnóstico gratuito. Te ayudaremos a resolver el problema de manera rápida y económica.
             </p>
-            <Link to="/contacto" className="btn btn-cta">
+            <Link 
+              to="/contacto" 
+              className="btn btn-cta"
+              onClick={() => trackClick('solicitar_presupuesto_home', 'button')}
+            >
               Solicitar Presupuesto Gratis
               <ArrowRight size={20} />
             </Link>

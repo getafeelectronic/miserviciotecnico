@@ -4,9 +4,13 @@ import { useForm } from 'react-hook-form';
 import emailjs from '@emailjs/browser';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import useAnalytics from '../hooks/useAnalytics';
 import './Contacto.css';
 
 function Contacto() {
+  // Analytics: tracking automático de pageview y duración
+  const { trackFormSubmit, trackConversion } = useAnalytics();
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
   
@@ -44,6 +48,19 @@ function Contacto() {
         console.warn('EmailJS no está configurado. Simulando envío...');
         // Simular envío para desarrollo
         await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Analytics: tracking de formulario simulado
+        await trackFormSubmit('contact', {
+          has_phone: !!data.telefono,
+          subject: data.asunto,
+          simulated: true
+        });
+        await trackConversion('contact_form', {
+          source: 'contact_page',
+          subject: data.asunto,
+          simulated: true
+        });
+        
         setSubmitStatus('success');
         reset();
         setIsSubmitting(false);
@@ -64,6 +81,16 @@ function Contacto() {
         },
         publicKey
       );
+
+      // Analytics: tracking de formulario y conversión
+      await trackFormSubmit('contact', {
+        has_phone: !!data.telefono,
+        subject: data.asunto
+      });
+      await trackConversion('contact_form', {
+        source: 'contact_page',
+        subject: data.asunto
+      });
 
       setSubmitStatus('success');
       reset();
@@ -275,6 +302,10 @@ function Contacto() {
                     <a 
                       href={`tel:${import.meta.env.VITE_BUSINESS_PHONE || '+34123456789'}`}
                       className="info-value info-link"
+                      onClick={() => trackConversion('phone_call', {
+                        source: 'contact_page',
+                        phone_number: import.meta.env.VITE_BUSINESS_PHONE
+                      })}
                     >
                       {import.meta.env.VITE_BUSINESS_PHONE || '+34 123 456 789'}
                     </a>
@@ -290,6 +321,10 @@ function Contacto() {
                     <a 
                       href={`mailto:${import.meta.env.VITE_BUSINESS_EMAIL || 'contacto@telerayo.com'}`}
                       className="info-value info-link"
+                      onClick={() => trackConversion('email', {
+                        source: 'contact_page',
+                        email: import.meta.env.VITE_BUSINESS_EMAIL
+                      })}
                     >
                       {import.meta.env.VITE_BUSINESS_EMAIL || 'contacto@telerayo.com'}
                     </a>
