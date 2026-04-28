@@ -96,60 +96,13 @@ function Home() {
   const [services, setServices] = useState([]);
   const [loadingServices, setLoadingServices] = useState(true);
 
-  // Datos de fallback (se usan si Supabase no está configurado)
-  const fallbackReviews = [
-    {
-      name: 'María García',
-      rating: 5,
-      text: 'Excelente servicio. Repararon mi TV en menos de 24 horas. Muy profesionales.',
-      date: 'Hace 1 semana'
-    },
-    {
-      name: 'Carlos Ruiz',
-      rating: 5,
-      text: 'Muy contentos con el trabajo realizado. Precio justo y trato excepcional.',
-      date: 'Hace 2 semanas'
-    },
-    {
-      name: 'Ana Martínez',
-      rating: 5,
-      text: 'Recomendable 100%. Mi TV LG quedó perfecta. Gracias!',
-      date: 'Hace 1 mes'
-    }
-  ];
-
-  const fallbackServices = [
-    {
-      slug: 'reparacion-tv-lcd-led',
-      title: 'Reparación TV LCD/LED',
-      description: 'Reparamos todo tipo de televisores LCD y LED de todas las marcas.',
-      icon_name: 'Tv'
-    },
-    {
-      slug: 'reparacion-tv-plasma',
-      title: 'Reparación TV Plasma',
-      description: 'Especialistas en solucionar problemas de televisores plasma.',
-      icon_name: 'Wrench'
-    },
-    {
-      slug: 'garantia-incluida',
-      title: 'Garantía Incluida',
-      description: 'Todas nuestras reparaciones incluyen garantía de 6 meses.',
-      icon_name: 'BadgeCheck'
-    }
-  ];
-
   // Cargar reviews desde Supabase al montar el componente
   useEffect(() => {
     async function loadReviews() {
       const data = await getReviews();
       
-      // Si hay datos de Supabase, usarlos; si no, usar fallback
       if (data && data.length > 0) {
         setReviews(data);
-      } else {
-        console.info('📋 Usando reviews de fallback (Supabase no configurado o sin datos)');
-        setReviews(fallbackReviews);
       }
       
       setLoadingReviews(false);
@@ -163,12 +116,8 @@ function Home() {
     async function loadServices() {
       const data = await getFeaturedServices();
       
-      // Si hay datos de Supabase, usarlos; si no, usar fallback
       if (data && data.length > 0) {
         setServices(data);
-      } else {
-        console.info('🔧 Usando servicios de fallback (Supabase no configurado o sin datos)');
-        setServices(fallbackServices);
       }
       
       setLoadingServices(false);
