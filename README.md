@@ -649,7 +649,43 @@ Las contribuciones son bienvenidas. Para cambios importantes:
 
 ---
 
-## 📄 Licencia
+## � Documentación
+
+### Para Desarrolladores
+
+La documentación técnica del proyecto está en la carpeta `doc/`:
+
+- **[SETUP-FRONTEND.md](doc/SETUP-FRONTEND.md)** - Guía de configuración del frontend
+- **[SUPABASE_SETUP.md](doc/SUPABASE_SETUP.md)** - Setup de base de datos
+- **[DEPLOY-GITHUB-PAGES.md](doc/DEPLOY-GITHUB-PAGES.md)** - Despliegue a producción
+- **[WORKFLOWS.md](doc/WORKFLOWS.md)** - Workflows de Git y desarrollo
+- **[CONVENTIONAL-COMMITS.md](doc/CONVENTIONAL-COMMITS.md)** - Convenciones de mensajes
+- **[GITHUB_WIKI_STRATEGY.md](doc/GITHUB_WIKI_STRATEGY.md)** - Estrategia de documentación Wiki
+- **[GITHUB_WIKI_SETUP.md](doc/GITHUB_WIKI_SETUP.md)** - Configuración paso a paso de Wiki
+
+### Para Usuarios y Equipo
+
+📖 **[GitHub Wiki](https://github.com/getafeelectronic/miserviciotecnico/wiki)** - Documentación colaborativa:
+
+**Para Clientes:**
+- [Preguntas Frecuentes (FAQ)](https://github.com/getafeelectronic/miserviciotecnico/wiki/FAQ-Clientes)
+- [Cómo Solicitar Reparación](https://github.com/getafeelectronic/miserviciotecnico/wiki/Como-Solicitar-Reparacion)
+- [Política de Garantías](https://github.com/getafeelectronic/miserviciotecnico/wiki/Politica-Garantias)
+
+**Para Técnicos:**
+- [Base de Conocimiento](https://github.com/getafeelectronic/miserviciotecnico/wiki/Base-Conocimiento)
+- [Procedimientos SOP](https://github.com/getafeelectronic/miserviciotecnico/wiki/Procedimientos-SOP)
+- [Proveedores de Repuestos](https://github.com/getafeelectronic/miserviciotecnico/wiki/Proveedores-Repuestos)
+
+**Administración:**
+- [Gestión de Garantías](https://github.com/getafeelectronic/miserviciotecnico/wiki/Gestion-Garantias)
+- [Inventario y Facturación](https://github.com/getafeelectronic/miserviciotecnico/wiki/Inventario-Repuestos)
+
+> 💡 **Nota**: La Wiki está en proceso de configuración. Consulta [GITHUB_WIKI_SETUP.md](doc/GITHUB_WIKI_SETUP.md) para contribuir.
+
+---
+
+## �📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
 
