@@ -39,6 +39,8 @@ declare -A secrets=(
 # APIs (valores vacíos - usuario debe configurar)
 declare -A apiSecrets=(
     ["VITE_EMAILJS_SERVICE_ID"]=""
+    ["VITE_EMAILJS_TEMPLATE_BUSINESS_ID"]=""
+    ["VITE_EMAILJS_TEMPLATE_CLIENT_ID"]=""
     ["VITE_EMAILJS_TEMPLATE_ID"]=""
     ["VITE_EMAILJS_PUBLIC_KEY"]=""
     ["VITE_GOOGLE_MAPS_API_KEY"]=""

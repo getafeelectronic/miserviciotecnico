@@ -27,9 +27,11 @@ function Contacto() {
     try {
       // Configuración de EmailJS
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateBusinessId = import.meta.env.VITE_EMAILJS_TEMPLATE_BUSINESS_ID;
-      const templateClientId = import.meta.env.VITE_EMAILJS_TEMPLATE_CLIENT_ID;
+      const legacyTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const templateBusinessId = import.meta.env.VITE_EMAILJS_TEMPLATE_BUSINESS_ID || legacyTemplateId;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      const businessEmail = import.meta.env.VITE_BUSINESS_EMAIL || 'ruizrjan@gmail.com';
+      const businessPhone = import.meta.env.VITE_BUSINESS_PHONE || '+34 916 95 07 81';
 
       // Verificar que las credenciales estén configuradas
       if (!serviceId || !templateBusinessId || !publicKey || 
@@ -61,34 +63,22 @@ function Contacto() {
         serviceId,
         templateBusinessId,
         {
+          to_name: 'Mi Servicio Técnico',
+          to_email: businessEmail,
           from_name: data.nombre,
           from_email: data.email,
           from_phone: data.telefono,
+          user_phone: data.telefono,
           subject: data.asunto,
+          user_subject: data.asunto,
           message: data.mensaje,
-          to_email: import.meta.env.VITE_BUSINESS_EMAIL || 'ruizrjan@gmail.com'
+          user_message: data.mensaje,
+          business_name: 'Mi Servicio Técnico',
+          business_email: businessEmail,
+          business_phone: businessPhone
         },
         publicKey
       );
-
-      // 2. Enviar email de CONFIRMACIÓN AL CLIENTE (si hay template configurado)
-      if (templateClientId && !templateClientId.includes('tu_')) {
-        await emailjs.send(
-          serviceId,
-          templateClientId,
-          {
-            to_name: data.nombre,
-            to_email: data.email,
-            user_phone: data.telefono,
-            user_subject: data.asunto,
-            user_message: data.mensaje,
-            business_name: 'Mi Servicio Técnico',
-            business_email: import.meta.env.VITE_BUSINESS_EMAIL || 'ruizrjan@gmail.com',
-            business_phone: import.meta.env.VITE_BUSINESS_PHONE || '+34 916 95 07 81'
-          },
-          publicKey
-        );
-      }
 
       // Analytics: tracking de formulario y conversión
       await trackFormSubmit('contact', {
