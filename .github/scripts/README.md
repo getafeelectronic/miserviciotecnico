@@ -38,7 +38,9 @@ chmod +x setup-secrets.sh
 
 3. 🔑 Configura secrets opcionales (APIs):
    - `VITE_EMAILJS_SERVICE_ID` (EmailJS - formulario de contacto)
-   - `VITE_EMAILJS_TEMPLATE_ID` (EmailJS - plantilla de email)
+   - `VITE_EMAILJS_TEMPLATE_BUSINESS_ID` (EmailJS - plantilla al negocio)
+   - `VITE_EMAILJS_TEMPLATE_CLIENT_ID` (EmailJS - plantilla de confirmación al cliente)
+   - `VITE_EMAILJS_TEMPLATE_ID` (EmailJS - plantilla legacy, compatibilidad)
    - `VITE_EMAILJS_PUBLIC_KEY` (EmailJS - clave pública)
    - `VITE_GOOGLE_MAPS_API_KEY` (Google Maps - mapa interactivo)
 

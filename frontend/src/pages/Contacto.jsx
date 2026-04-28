@@ -27,12 +27,15 @@ function Contacto() {
     try {
       // Configuración de EmailJS
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const legacyTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const templateBusinessId = import.meta.env.VITE_EMAILJS_TEMPLATE_BUSINESS_ID || legacyTemplateId;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      const businessEmail = import.meta.env.VITE_BUSINESS_EMAIL || 'ruizrjan@gmail.com';
+      const businessPhone = import.meta.env.VITE_BUSINESS_PHONE || '+34 916 95 07 81';
 
       // Verificar que las credenciales estén configuradas
-      if (!serviceId || !templateId || !publicKey || 
-          serviceId.includes('tu_') || templateId.includes('tu_') || publicKey.includes('tu_')) {
+      if (!serviceId || !templateBusinessId || !publicKey || 
+          serviceId.includes('tu_') || templateBusinessId.includes('tu_') || publicKey.includes('tu_')) {
         console.warn('EmailJS no está configurado. Simulando envío...');
         // Simular envío para desarrollo
         await new Promise(resolve => setTimeout(resolve, 1500));
@@ -55,17 +58,24 @@ function Contacto() {
         return;
       }
 
-      // Enviar email con EmailJS
+      // 1. Enviar email AL NEGOCIO con los datos del formulario
       await emailjs.send(
         serviceId,
-        templateId,
+        templateBusinessId,
         {
+          to_name: 'Mi Servicio Técnico',
+          to_email: businessEmail,
           from_name: data.nombre,
           from_email: data.email,
           from_phone: data.telefono,
+          user_phone: data.telefono,
           subject: data.asunto,
+          user_subject: data.asunto,
           message: data.mensaje,
-          to_email: import.meta.env.VITE_BUSINESS_EMAIL || 'contacto@telerayo.com'
+          user_message: data.mensaje,
+          business_name: 'Mi Servicio Técnico',
+          business_email: businessEmail,
+          business_phone: businessPhone
         },
         publicKey
       );
