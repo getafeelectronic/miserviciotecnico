@@ -135,14 +135,14 @@ function Home() {
   return (
     <div className="home">
       <Helmet>
-        <title>Mi Servicio Técnico de Televisores en Getafe | Reparación Profesional</title>
-        <meta name="description" content="Servicio técnico profesional de reparación de televisores en Getafe. Más de 10 años de experiencia. Diagnóstico gratuito, reparación rápida y garantía incluida." />
-        <meta property="og:title" content="Mi Servicio Técnico de Televisores en Getafe" />
-        <meta property="og:description" content="Servicio técnico profesional con más de 10 años de experiencia en reparación de televisores LCD, LED y Plasma." />
+        <title>Mi servicio técnico de televisores en Getafe | Reparación profesional</title>
+        <meta name="description" content="Servicio técnico profesional de reparación de televisores en Getafe. Más de 20 años de experiencia. Diagnóstico gratuito, reparación rápida y garantía incluida." />
+        <meta property="og:title" content="Mi servicio técnico de televisores en Getafe" />
+        <meta property="og:description" content="Servicio técnico profesional con más de 20 años de experiencia en reparación de televisores LCD, LED y Plasma." />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Mi Servicio Técnico de Televisores en Getafe" />
-        <meta name="twitter:description" content="Servicio técnico profesional con más de 10 años de experiencia." />
+        <meta name="twitter:title" content="Mi servicio técnico de televisores en Getafe" />
+        <meta name="twitter:description" content="Servicio técnico profesional con más de 20 años de experiencia." />
       </Helmet>
       <Hero />
 
@@ -222,7 +222,7 @@ function Home() {
               <ul className="features-list">
                 <li className="feature-item">
                   <span className="feature-icon">✓</span>
-                  <span>Más de 10 años de experiencia</span>
+                  <span>Más de 20 años de experiencia</span>
                 </li>
                 <li className="feature-item">
                   <span className="feature-icon">✓</span>
@@ -234,7 +234,7 @@ function Home() {
                 </li>
                 <li className="feature-item">
                   <span className="feature-icon">✓</span>
-                  <span>Garantía de 6 meses en todas las reparaciones</span>
+                  <span>Garantía de 3 meses en todas las reparaciones</span>
                 </li>
                 <li className="feature-item">
                   <span className="feature-icon">✓</span>
@@ -252,15 +252,15 @@ function Home() {
             >
               <div className="stats-card">
                 <div className="stat">
-                  <span className="stat-number">10+</span>
+                  <span className="stat-number">20+</span>
                   <span className="stat-label">Años de experiencia</span>
                 </div>
                 <div className="stat">
-                  <span className="stat-number">500+</span>
+                  <span className="stat-number">5000+</span>
                   <span className="stat-label">TVs reparados</span>
                 </div>
                 <div className="stat">
-                  <span className="stat-number">100%</span>
+                  <span className="stat-number">99%</span>
                   <span className="stat-label">Clientes satisfechos</span>
                 </div>
               </div>

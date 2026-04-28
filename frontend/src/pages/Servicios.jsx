@@ -17,6 +17,7 @@ import {
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { getServices } from '../lib/supabase';
+import useAnalytics from '../hooks/useAnalytics';
 import './Servicios.css';
 
 // Mapeo de nombres de iconos a componentes de lucide-react
@@ -36,6 +37,9 @@ const iconMap = {
 };
 
 function Servicios() {
+  // Analytics: tracking automático de pageview y duración
+  useAnalytics();
+  
   // Estado para servicios dinámicos
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);

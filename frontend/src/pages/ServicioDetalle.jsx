@@ -19,6 +19,7 @@ import {
 import { motion } from 'framer-motion';
 import DOMPurify from 'dompurify';
 import { getServiceBySlug } from '../lib/supabase';
+import useAnalytics from '../hooks/useAnalytics';
 import './ServicioDetalle.css';
 
 // Mapeo de nombres de iconos a componentes de lucide-react
@@ -43,6 +44,9 @@ function ServicioDetalle() {
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+
+  // Analytics: tracking automático de pageview y duración
+  useAnalytics();
 
   useEffect(() => {
     async function loadService() {
