@@ -19,7 +19,7 @@ function Hero() {
             Reparación de <span className="highlight">Televisores</span> en Getafe
           </h1>
           <p className="hero-subtitle">
-            Servicio técnico profesional con más de 10 años de experiencia.
+            Servicio técnico profesional con más de 20 años de experiencia.
             Diagnóstico gratuito y garantía en todas nuestras reparaciones.
           </p>
           <div className="hero-buttons">
