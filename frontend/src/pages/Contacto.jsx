@@ -27,12 +27,13 @@ function Contacto() {
     try {
       // Configuración de EmailJS
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const templateBusinessId = import.meta.env.VITE_EMAILJS_TEMPLATE_BUSINESS_ID;
+      const templateClientId = import.meta.env.VITE_EMAILJS_TEMPLATE_CLIENT_ID;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
       // Verificar que las credenciales estén configuradas
-      if (!serviceId || !templateId || !publicKey || 
-          serviceId.includes('tu_') || templateId.includes('tu_') || publicKey.includes('tu_')) {
+      if (!serviceId || !templateBusinessId || !publicKey || 
+          serviceId.includes('tu_') || templateBusinessId.includes('tu_') || publicKey.includes('tu_')) {
         console.warn('EmailJS no está configurado. Simulando envío...');
         // Simular envío para desarrollo
         await new Promise(resolve => setTimeout(resolve, 1500));
@@ -55,20 +56,39 @@ function Contacto() {
         return;
       }
 
-      // Enviar email con EmailJS
+      // 1. Enviar email AL NEGOCIO con los datos del formulario
       await emailjs.send(
         serviceId,
-        templateId,
+        templateBusinessId,
         {
           from_name: data.nombre,
           from_email: data.email,
           from_phone: data.telefono,
           subject: data.asunto,
           message: data.mensaje,
-          to_email: import.meta.env.VITE_BUSINESS_EMAIL || 'contacto@telerayo.com'
+          to_email: import.meta.env.VITE_BUSINESS_EMAIL || 'ruizrjan@gmail.com'
         },
         publicKey
       );
+
+      // 2. Enviar email de CONFIRMACIÓN AL CLIENTE (si hay template configurado)
+      if (templateClientId && !templateClientId.includes('tu_')) {
+        await emailjs.send(
+          serviceId,
+          templateClientId,
+          {
+            to_name: data.nombre,
+            to_email: data.email,
+            user_phone: data.telefono,
+            user_subject: data.asunto,
+            user_message: data.mensaje,
+            business_name: 'Mi Servicio Técnico',
+            business_email: import.meta.env.VITE_BUSINESS_EMAIL || 'ruizrjan@gmail.com',
+            business_phone: import.meta.env.VITE_BUSINESS_PHONE || '+34 916 95 07 81'
+          },
+          publicKey
+        );
+      }
 
       // Analytics: tracking de formulario y conversión
       await trackFormSubmit('contact', {
