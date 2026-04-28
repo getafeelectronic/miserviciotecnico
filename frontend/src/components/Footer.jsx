@@ -108,7 +108,7 @@ function Footer() {
           </h3>
           <p className="footer-description">
             Servicio técnico especializado en reparación de televisores en Getafe.
-            Más de 10 años de experiencia y garantía en todas nuestras reparaciones.
+            Más de 20 años de experiencia y garantía en todas nuestras reparaciones.
           </p>
           <div className="social-links">
             {loadingSocial ? (
