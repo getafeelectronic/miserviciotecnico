@@ -10,7 +10,9 @@
 
 **Sitio web corporativo con panel de administración para servicio técnico especializado en reparación de televisores en Getafe, Madrid**
 
-[🌐 Ver Sitio Web](https://getafeelectronic.github.io/miserviciotecnico/) · [🔧 Backend API](https://miserviciotecnico.vercel.app/) · [📞 Contacto](https://getafeelectronic.github.io/miserviciotecnico/#/contacto)
+<a href="https://getafeelectronic.github.io/miserviciotecnico/">🌐 Ver Sitio Web</a>  
+<a href="https://miserviciotecnico.vercel.app/">🔧 Backend API</a>  
+<a href="tel:+34916950781">📞 Llamar</a>
 
 </div>
 
@@ -635,7 +637,7 @@ Las contribuciones son bienvenidas. Para cambios importantes:
 - 📍 Dirección: C. Leoncio Rojas, 11, 28901 Getafe, Madrid
 - 📞 Teléfono: +34 916 95 07 81
 - 📧 Email: ruizrjan@gmail.com
-- 🕒 Horario: Lun-Vie: 9:00 - 19:00
+- 🕒 Horario: Lun-Vie: 9:30–13:30, 16:30–19:30
 
 **Enlaces del Proyecto:**
 - 🌐 [Sitio Web (Frontend)](https://getafeelectronic.github.io/miserviciotecnico/)

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import emailjs from '@emailjs/browser';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import useAnalytics from '../hooks/useAnalytics';
 import './Contacto.css';
@@ -20,17 +19,6 @@ function Contacto() {
     formState: { errors },
     reset
   } = useForm();
-
-  // Configuración del mapa
-  const mapContainerStyle = {
-    width: '100%',
-    height: '100%'
-  };
-
-  const center = {
-    lat: parseFloat(import.meta.env.VITE_BUSINESS_COORDINATES_LAT) || 40.3063,
-    lng: parseFloat(import.meta.env.VITE_BUSINESS_COORDINATES_LNG) || -3.7322
-  };
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -338,8 +326,7 @@ function Contacto() {
                   <div className="info-content">
                     <span className="info-label">Horario</span>
                     <span className="info-value">
-                      Lunes a Viernes: 9:00 - 19:00<br />
-                      Sábados: 10:00 - 14:00
+                      {import.meta.env.VITE_BUSINESS_HOURS || 'Lun-Vie: 9:00 - 19:00'}
                     </span>
                   </div>
                 </div>
@@ -348,15 +335,16 @@ function Contacto() {
 
             {/* Mapa */}
             <div className="map-card">
-              <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ''}>
-                <GoogleMap
-                  mapContainerStyle={mapContainerStyle}
-                  center={center}
-                  zoom={15}
-                >
-                  <Marker position={center} />
-                </GoogleMap>
-              </LoadScript>
+              <iframe
+                src={import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3042.8237583668847!2d-3.735363884604658!3d40.302205079378395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4227f8a3d1d3b9%3A0x5c7f5c1e5c7f5c1e!2sC.%20Leoncio%20Rojas%2C%2011%2C%2028901%20Getafe%2C%20Madrid!5e0!3m2!1ses!2ses!4v1234567890123!5m2!1ses!2ses"}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Repararción televisores en Getafe | Tele Rayo"
+              ></iframe>
             </div>
           </div>
         </div>
