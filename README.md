@@ -3,7 +3,7 @@
 <div align="center">
 
 ![Estado del Proyecto](https://img.shields.io/badge/estado-producción-brightgreen)
-![Versión](https://img.shields.io/badge/versión-1.1.0-blue)
+![Versión](https://img.shields.io/badge/versión-1.2.1-blue)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-blue)
 ![Frontend Deploy](https://img.shields.io/badge/frontend-GitHub%20Pages-blue)
 ![Backend Deploy](https://img.shields.io/badge/backend-Vercel-black)
