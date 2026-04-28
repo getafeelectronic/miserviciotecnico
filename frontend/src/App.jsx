@@ -5,7 +5,10 @@ import Contacto from './pages/Contacto';
 import Nosotros from './pages/Nosotros';
 import Servicios from './pages/Servicios';
 import ServicioDetalle from './pages/ServicioDetalle';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 import CookieConsent from './components/CookieConsent';
+import ScrollToTop from './components/ScrollToTop';
 import './App.css';
 
 function App() {
@@ -13,6 +16,7 @@ function App() {
     <>
       <CookieConsent />
       <BrowserRouter basename="/miserviciotecnico">
+        <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
@@ -20,6 +24,8 @@ function App() {
             <Route path="/servicios/:slug" element={<ServicioDetalle />} />
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/nosotros" element={<Nosotros />} />
+            <Route path="/privacidad" element={<PrivacyPolicy />} />
+            <Route path="/terminos" element={<TermsOfService />} />
             <Route path="*" element={<Home />} />
           </Route>
         </Routes>
