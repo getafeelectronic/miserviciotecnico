@@ -54,29 +54,23 @@ const useAnalytics = () => {
   };
 
   /**
-   * Obtiene ubicación geográfica del usuario usando ipapi.co (gratis)
+   * Obtiene información de localización usando únicamente APIs del navegador.
+   * Se evita ipapi.co porque bloquea requests desde GitHub Pages (CORS).
    */
-  const getGeolocation = async () => {
-    try {
-      const response = await fetch('https://ipapi.co/json/');
-      const data = await response.json();
-      return {
-        country: data.country_code || 'Unknown',
-        country_name: data.country_name || 'Unknown',
-        city: data.city || 'Unknown',
-        region: data.region || 'Unknown',
-        timezone: data.timezone || 'Unknown'
-      };
-    } catch (error) {
-      console.warn('No se pudo obtener geolocalización:', error);
-      return {
-        country: 'Unknown',
-        country_name: 'Unknown',
-        city: 'Unknown',
-        region: 'Unknown',
-        timezone: 'Unknown'
-      };
-    }
+  const getGeolocation = () => {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown';
+    const language = navigator.language || 'Unknown';
+    // Inferir país a partir del locale del navegador (ej: "es-ES" → "ES")
+    const localeParts = language.split('-');
+    const country = localeParts.length > 1 ? localeParts[1].toUpperCase() : 'Unknown';
+
+    return {
+      country,
+      country_name: 'Unknown',
+      city: 'Unknown',
+      region: 'Unknown',
+      timezone
+    };
   };
 
   /**
@@ -116,7 +110,7 @@ const useAnalytics = () => {
    * Trackea un pageview con información completa
    */
   const trackPageview = useCallback(async () => {
-    const geolocation = await getGeolocation();
+    const geolocation = getGeolocation();
 
     await sendEvent({
       event_type: 'pageview',
