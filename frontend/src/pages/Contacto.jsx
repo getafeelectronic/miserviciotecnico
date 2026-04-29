@@ -20,6 +20,9 @@ function Contacto() {
     reset
   } = useForm();
 
+  const businessPhoneRaw = import.meta.env.VITE_BUSINESS_PHONE || '+34 916 95 07 81';
+  const businessPhoneForCall = businessPhoneRaw.split('|')[0].trim();
+
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     setSubmitStatus(null);
@@ -298,14 +301,14 @@ function Contacto() {
                   <div className="info-content">
                     <span className="info-label">Teléfono</span>
                     <a 
-                      href={`tel:${import.meta.env.VITE_BUSINESS_PHONE || '+34123456789'}`}
+                      href={`tel:${businessPhoneForCall || '+34123456789'}`}
                       className="info-value info-link"
                       onClick={() => trackConversion('phone_call', {
                         source: 'contact_page',
-                        phone_number: import.meta.env.VITE_BUSINESS_PHONE
+                        phone_number: businessPhoneRaw
                       })}
                     >
-                      {import.meta.env.VITE_BUSINESS_PHONE || '+34 123 456 789'}
+                      {businessPhoneRaw || '+34 123 456 789'}
                     </a>
                   </div>
                 </div>

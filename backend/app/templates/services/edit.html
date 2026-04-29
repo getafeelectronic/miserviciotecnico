@@ -97,7 +97,7 @@
                         <div id="editor" style="height: 300px; background: white;"></div>
                         
                         <!-- Textarea oculto para el formulario -->
-                        <textarea class="form-control" id="long_description" name="long_description" required style="display: none;">{{ service.long_description }}</textarea>
+                        <textarea class="form-control" id="long_description" name="long_description" style="display: none;">{{ service.long_description }}</textarea>
                         
                         <!-- Vista HTML (inicialmente oculta) -->
                         <textarea class="form-control" id="htmlView" rows="15" style="font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.5; display: none;"></textarea>
@@ -217,15 +217,41 @@ document.addEventListener('DOMContentLoaded', function() {
         quill.root.innerHTML = existingContent;
     }
     
-    // Sincronizar contenido antes de enviar el formulario
+    const longDescriptionField = document.getElementById('long_description');
+    const htmlView = document.getElementById('htmlView');
+
+    function isEditorContentEmpty(content) {
+        const plainText = content
+            .replace(/<[^>]*>/g, ' ')
+            .replace(/&nbsp;/g, ' ')
+            .trim();
+        return plainText.length === 0;
+    }
+
+    // Sincronizar y validar contenido antes de enviar el formulario
     const form = document.querySelector('form');
-    form.addEventListener('submit', function() {
+    form.addEventListener('submit', function(e) {
+        let htmlContent;
+
         if (isHtmlView) {
             // Si estamos en vista HTML, tomar el valor del textarea HTML
-            document.getElementById('long_description').value = document.getElementById('htmlView').value;
+            htmlContent = htmlView.value;
         } else {
             // Si estamos en vista visual, tomar el HTML de Quill
-            document.getElementById('long_description').value = quill.root.innerHTML;
+            htmlContent = quill.root.innerHTML;
+        }
+
+        longDescriptionField.value = htmlContent;
+
+        if (isEditorContentEmpty(htmlContent)) {
+            e.preventDefault();
+            alert('⚠️ El campo "Contenido Completo" es obligatorio');
+
+            if (isHtmlView) {
+                htmlView.focus();
+            } else {
+                quill.focus();
+            }
         }
     });
     

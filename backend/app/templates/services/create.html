@@ -90,7 +90,7 @@
                         <div id="editor" style="height: 300px; background: white;"></div>
                         
                         <!-- Textarea oculto para el formulario -->
-                        <textarea class="form-control" id="long_description" name="long_description" required style="display: none;"></textarea>
+                        <textarea class="form-control" id="long_description" name="long_description" style="display: none;"></textarea>
                         
                         <!-- Vista HTML (inicialmente oculta) -->
                         <textarea class="form-control" id="htmlView" rows="15" style="font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.5; display: none;"></textarea>
@@ -195,11 +195,33 @@ document.addEventListener('DOMContentLoaded', function() {
         placeholder: 'Escribe el contenido completo del servicio aquí...'
     });
     
-    // Sincronizar contenido antes de enviar el formulario
+    const longDescriptionField = document.getElementById('long_description');
+    const htmlView = document.getElementById('htmlView');
+
+    function isEditorContentEmpty(content) {
+        const plainText = content
+            .replace(/<[^>]*>/g, ' ')
+            .replace(/&nbsp;/g, ' ')
+            .trim();
+        return plainText.length === 0;
+    }
+
+    // Sincronizar y validar contenido antes de enviar el formulario
     const form = document.querySelector('form');
-    form.addEventListener('submit', function() {
-        const htmlContent = quill.root.innerHTML;
-        document.getElementById('long_description').value = htmlContent;
+    form.addEventListener('submit', function(e) {
+        const htmlContent = isHtmlView ? htmlView.value : quill.root.innerHTML;
+        longDescriptionField.value = htmlContent;
+
+        if (isEditorContentEmpty(htmlContent)) {
+            e.preventDefault();
+            alert('⚠️ El campo "Contenido Completo" es obligatorio');
+
+            if (isHtmlView) {
+                htmlView.focus();
+            } else {
+                quill.focus();
+            }
+        }
     });
     
     // Event listener para el botón toggle

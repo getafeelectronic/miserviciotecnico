@@ -10,6 +10,8 @@ const logo = 'https://lysejfhxackcmoksclvm.supabase.co/storage/v1/object/sign/we
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const businessPhoneRaw = import.meta.env.VITE_BUSINESS_PHONE || '+34 123 456 789';
+  const businessPhoneForCall = businessPhoneRaw.split('|')[0].trim();
   const [version, setVersion] = useState(packageJson.version);
   const [socialLinks, setSocialLinks] = useState([]);
   const [loadingSocial, setLoadingSocial] = useState(true);
@@ -180,8 +182,8 @@ function Footer() {
             </li>
             <li>
               <Phone size={18} />
-              <a href={`tel:${import.meta.env.VITE_BUSINESS_PHONE || '+34123456789'}`}>
-                {import.meta.env.VITE_BUSINESS_PHONE || '+34 123 456 789'}
+              <a href={`tel:${businessPhoneForCall || '+34123456789'}`}>
+                {businessPhoneRaw || '+34 123 456 789'}
               </a>
             </li>
             <li>

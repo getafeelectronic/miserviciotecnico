@@ -6,6 +6,8 @@ import './TermsOfService.css';
 function TermsOfService() {
   // Analytics: tracking automático de pageview y duración
   useAnalytics();
+  const businessPhoneRaw = import.meta.env.VITE_BUSINESS_PHONE || '+34 123 456 789';
+  const businessPhoneForCall = businessPhoneRaw.split('|')[0].trim();
   
   const lastUpdated = '28 de abril de 2026';
 
@@ -335,8 +337,8 @@ function TermsOfService() {
               </p>
               <p>
                 <strong>Teléfono:</strong>{' '}
-                <a href={`tel:${import.meta.env.VITE_BUSINESS_PHONE}`}>
-                  {import.meta.env.VITE_BUSINESS_PHONE}
+                <a href={`tel:${businessPhoneForCall || '+34123456789'}`}>
+                  {businessPhoneRaw}
                 </a>
               </p>
               <p>
