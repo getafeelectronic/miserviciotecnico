@@ -38,6 +38,10 @@ const iconMap = {
   'Phone': Phone
 };
 
+const businessPhoneRaw = import.meta.env.VITE_BUSINESS_PHONE || '+34 916 95 07 81';
+const businessPhoneForCall = businessPhoneRaw.split('|')[0].trim();
+const businessPhoneDisplay = businessPhoneForCall.replace(/\s/g, ' ');
+
 function ServicioDetalle() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -188,9 +192,9 @@ function ServicioDetalle() {
                   <Link to="/contacto" className="btn btn-primary">
                     Solicitar Presupuesto
                   </Link>
-                  <a href="tel:+34916957567" className="btn btn-secondary">
+                  <a href={`tel:${businessPhoneForCall.replace(/\s/g, '')}`} className="btn btn-secondary">
                     <Phone size={20} />
-                    916 95 75 67
+                    {businessPhoneDisplay}
                   </a>
                 </div>
               </div>
