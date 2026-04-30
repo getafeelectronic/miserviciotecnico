@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { 
   Tv, 
@@ -44,7 +44,6 @@ const businessPhoneDisplay = businessPhoneForCall.replace(/\s/g, ' ');
 
 function ServicioDetalle() {
   const { slug } = useParams();
-  const navigate = useNavigate();
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
