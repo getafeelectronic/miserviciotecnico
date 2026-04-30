@@ -165,7 +165,7 @@ function Footer() {
             ) : (
               featuredServices.map((service) => (
                 <li key={service.slug}>
-                  <Link to={`/servicios/${service.slug}`}>{service.title}</Link>
+                  <Link to={`/servicios/${service.slug}`} title={service.title}>{service.title}</Link>
                 </li>
               ))
             )}
