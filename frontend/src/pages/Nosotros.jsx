@@ -57,8 +57,67 @@ function Nosotros() {
     'Reparación de televisores de todas las marcas'
   ];
 
-  const brands = ['Samsung', 'LG', 'Sony', 'Philips', 'Panasonic', 'Xiaomi'];
-
+  //const brands = ['Samsung', 'LG', 'Sony', 'Philips', 'Panasonic', 'Xiaomi'];
+  const brands = [
+  "Grundig",
+  "Hisense",
+  "LG",
+  "Panasonic",
+  "Philips",
+  "Samsung",
+  "Sony",
+  "TCL",
+  "Telefunken",
+  "Thomson",
+  "Toshiba",
+  "Xiaomi",
+  "Realme",
+  "Bang & Olufsen",
+  "Continental Edison",
+  "Denver",
+  "Edenwood",
+  "Haier",
+  "Hitachi",
+  "HKC",
+  "Huawei",
+  "Insignia",
+  "JVC",
+  "LeEco",
+  "Loewe",
+  "Medion",
+  "Metz",
+  "Motorola",
+  "OK.",
+  "OnePlus",
+  "RCA",
+  "Sceptre",
+  "Sharp",
+  "Skyworth",
+  "Vestel",
+  "Vizio",
+  "Nokia",
+  "Engel",
+  "Nevir",
+  "TD Systems",
+  "Hyundai",
+  "Strong",
+  "Oppo",
+  "Metz Blue",
+  "Asus",
+  "Amazon",
+  "Cecotec",
+  "Nilait",
+  "Daewoo",
+  "Dreame",
+  "Blaupunkt",
+  "Roku",
+  "SmartTech",
+  "peaq",
+  "Infiniton",
+  "Tesla",
+  "Grunkel",
+  "Chiq"
+];
   const reasons = [
     'Atención personalizada y cercana',
     'Técnicos cualificados y con experiencia',
@@ -71,7 +130,7 @@ function Nosotros() {
   return (
     <div className="nosotros-page">
       <Helmet>
-        <title>Sobre Nosotros | 10+ Años de Experiencia | Mi Servicio Técnico</title>
+        <title>Sobre Nosotros | 20+ Años de Experiencia | Mi Servicio Técnico</title>
         <meta name="description" content="Conoce nuestro servicio técnico de televisores en Getafe. Más de 10 años reparando TVs con profesionalidad, rapidez y garantía. Técnicos cualificados a tu servicio." />
         <meta property="og:title" content="Sobre Nosotros | Mi Servicio Técnico de Televisores" />
         <meta property="og:description" content="Más de 10 años de experiencia en reparación de televisores. Profesionalidad, rapidez y garantía." />
@@ -88,7 +147,7 @@ function Nosotros() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            Sobre Nosotros
+            Sobre nosotros
           </motion.h1>
           <motion.p 
             className="nosotros-hero-subtitle"
@@ -108,7 +167,7 @@ function Nosotros() {
             <div className="intro-icon">
               <Users size={48} />
             </div>
-            <h2 className="section-title">¿Quiénes Somos?</h2>
+            <h2 className="section-title">¿Quiénes somos?</h2>
             <p className="intro-text">
               Somos un servicio técnico especializado en la <strong>reparación de televisores 
               en Getafe (Madrid)</strong>, con una sólida trayectoria ofreciendo soluciones 
@@ -130,7 +189,7 @@ function Nosotros() {
           <motion.div {...fadeInUp}>
             <div className="services-header">
               <Wrench size={40} />
-              <h2 className="section-title">Servicios de Reparación</h2>
+              <h2 className="section-title">Servicios de reparación</h2>
             </div>
             <div className="services-grid">
               {services.map((service, index) => (
@@ -155,7 +214,7 @@ function Nosotros() {
       <section className="nosotros-brands">
         <div className="container">
           <motion.div {...fadeInUp}>
-            <h2 className="section-title">Especialistas en Todas las Marcas</h2>
+            <h2 className="section-title">Especialistas en todas las marcas</h2>
             <p className="brands-description">
               Trabajamos con televisores de fabricantes reconocidos. Nuestro conocimiento 
               multimarca nos permite identificar rápidamente cualquier avería y aplicar la 
@@ -183,7 +242,7 @@ function Nosotros() {
       <section className="nosotros-why">
         <div className="container">
           <motion.div {...fadeInUp}>
-            <h2 className="section-title">¿Por Qué Elegirnos?</h2>
+            <h2 className="section-title">¿Por qué elegirnos?</h2>
             <div className="reasons-grid">
               {reasons.map((reason, index) => (
                 <motion.div 
