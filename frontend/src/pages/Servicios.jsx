@@ -179,10 +179,7 @@ function Servicios() {
                     {/* Imagen del servicio si existe */}
                     {service.image_url && (
                       <div className="service-image">
-                        <img
-                          src={service.image_url}
-                          alt={service.description ? `${service.title} – ${service.description.slice(0, 100)}` : service.title}
-                        />
+                        <img src={service.image_url} alt={service.title} />
                       </div>
                     )}
                     <div className="service-card-content">
