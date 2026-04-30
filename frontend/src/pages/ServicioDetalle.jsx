@@ -157,7 +157,7 @@ function ServicioDetalle() {
               >
                 <img 
                   src={service.image_url} 
-                  alt={service.title}
+                  alt={service.description ? `${service.title} – ${service.description.slice(0, 100)}` : service.title}
                   className="servicio-image"
                 />
               </motion.div>
