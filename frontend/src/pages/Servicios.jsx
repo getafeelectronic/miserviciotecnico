@@ -175,7 +175,7 @@ function Servicios() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y: -5 }}
                 >
-                  <Link to={`/servicios/${service.slug}`} className="service-card-link">
+                  <Link to={`/servicios/${service.slug}`} className="service-card-link" title={service.title}>
                     {/* Imagen del servicio si existe */}
                     {service.image_url && (
                       <div className="service-image">
